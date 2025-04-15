@@ -27,7 +27,6 @@ Femina_HealthTracker/
 └── form.html                 # Form for data input
 ```
 
----
 
 ## 📌 Future Enhancements  
 - ✅ Backend integration for form and journal entries  
@@ -36,7 +35,6 @@ Femina_HealthTracker/
 - ✅ User login and personalized tracking dashboard  
 - ✅ Visual analytics for cycle patterns
 
----
 
 ## 🙋‍♀️ Made with love by  
 **Khushi Gupta** 
