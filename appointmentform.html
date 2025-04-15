@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fce4ec;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+        h2 {
+            color: #ff4081;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        input, select {
+            width: 80%;
+            padding: 8px;
+            border: 1px solid #ff4081;
+            border-radius: 5px;
+        }
+        button {
+            background: #ff4081;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 85%;
+        }
+        button:hover {
+            background: #ff5a92;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Book an Appointment</h2>
+    <form id="appointment-form">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="tel" name="phone" placeholder="Your Phone Number" required>
+        
+        <label for="time">Preferred Timing:</label>
+        <select name="time" required>
+            <option value="Morning">Morning</option>
+            <option value="Afternoon">Afternoon</option>
+            <option value="Evening">Evening</option>
+        </select>
+
+        <button type="submit">Confirm Appointment</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById("appointment-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent actual form submission
+        window.location.href = "thank-you.html"; // Redirect to Thank You page
+    });
+</script>
+
+</body>
+</html>
