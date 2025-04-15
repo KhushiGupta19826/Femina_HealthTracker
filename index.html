@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Femina - Your Health Our Priority</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Colors */
+        :root {
+            --primary: #ff3d8a;
+            --primary-light: #ff6ea4;
+            --primary-dark: #e9007a;
+            --secondary: #000000;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --gray: #e0e0e0;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navigation */
+        .nav {
+            background-color: var(--white);
+            padding: 12px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 35px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .menu {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .menu li a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .menu li a:hover {
+            color: var(--primary);
+        }
+
+        .auth-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 61, 138, 0.3);
+        }
+
+        .btn-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 40px 0;
+            border-radius: 20px;
+            margin: 20px auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .rating i {
+            color: gold;
+        }
+
+        .hero-image {
+            position: relative;
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-features {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .feature {
+            text-align: center;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover .feature-icon {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .connector {
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            right: 50px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        /* Stats */
+        .stats {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            border-radius: 0 0 20px 20px;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat {
+            padding: 10px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .stat h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Cards Section */
+        .cards-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-pink {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .card-dark {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        .mobile-app {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .app-text {
+            flex: 1;
+        }
+
+        .app-image {
+            flex: 1;
+            text-align: right;
+        }
+
+        .app-image img {
+            max-width: 80%;
+            transition: transform 0.3s ease;
+        }
+
+        .app-image img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Team Section */
+        .team {
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        .team h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .team p {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        /* Join Section */
+        .join {
+            text-align: center;
+            margin: 40px auto;
+        }
+
+        .join h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        /* FAQ Section */
+        .faq {
+            margin: 40px auto;
+        }
+
+        .faq h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 30px 0 10px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo {
+            max-width: 200px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--white);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom a {
+            color: var(--white);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .menu {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .menu {
+                margin: 10px 0;
+            }
+
+            .hero-features {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .connector {
+                display: none;
+            }
+
+            .stats {
+                flex-wrap: wrap;
+            }
+
+            .stat {
+                flex: 1 0 50%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .menu {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .mobile-app {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .app-image {
+                text-align: center;
+            }
+
+            .stat {
+                flex: 1 0 100%;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .menu {
+                display: none;
+                width: 100%;
+            }
+
+            .menu.active {
+                display: flex;
+            }
+
+            .nav-right {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="#">
+                    <h2>Fem<span style="color: var(--primary);">♀</span>na</h2>
+                </a>
+            </div>
+            
+            <div class="nav-right">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <ul class="menu" id="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="doctors.html">Book An Appointment</a></li>
+                    <li><a href="#">Period Tracker</a></li>
+                    <li><a href="#">Journal</a></li>
+                </ul>
+            </div>
+            
+            <div class="auth-btn">
+                <a href="login.html" class="btn btn-primary">Login/Register <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero animate-fadeIn">
+            <div class="hero-content">
+                <h1>YOUR HEALTH OUR PRIORITY</h1>
+                <p>We Take A Dedicated Approach To Your Health</p>
+                
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span>4.9/5.0</span>
+                </div>
+                
+                <div class="hero-features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <p>Book An Appointment</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <p>Track Your Cycle</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <p>Track Your Health</p>
+                    </div>
+                    
+                    <div class="connector"></div>
+                </div>
+                
+                <!-- <div class="hero-image" style="display: inline-block;">
+                    <img src="women.png" alt="Woman with crown" class="small-image">
+                </div>
+                
+                <style>
+                    .small-image {
+                        width: 300px; /* Adjust as needed */
+                        height: auto; /* Maintain aspect ratio */
+                        border-radius: 10px;
+                    }
+                </style>
+                 -->
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <h3>21k+</h3>
+                    <p>Daily Users</p>
+                </div>
+                <div class="stat">
+                    <h3>42k+</h3>
+                    <p>Monthly Users</p>
+                </div>
+                <div class="stat">
+                    <h3>3k+</h3>
+                    <p>Doctors</p>
+                </div>
+                <div class="stat">
+                    <h3>78k+</h3>
+                    <p>Downloads</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cards Section -->
+        <section class="cards-section">
+            <div class="card">
+                <div class="card-content">
+                    <h2>Fem<span style="color: var(--primary);">♀</span>na</h2>
+                </div>
+            </div>
+            
+            <div class="card card-dark">
+                <div class="card-content">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p>4572 Users</p>
+                    <h3>Our Ratings</h3>
+                </div>
+            </div>
+            
+            <div class="card card-pink">
+                <div class="card-content">
+                    <h3>78k+</h3>
+                    <p>Downloads</p>
+                </div>
+            </div>
+            
+            <div class="card card-dark">
+                <div class="card-content">
+                    <h2>Fem<span style="color: var(--primary);">♀</span>na</h2>
+                    <p>Makes You Fit</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="cards-section">
+            <div class="card card-pink" style="grid-column: span 2;">
+                <div class="card-content" style="display: flex; align-items: center; justify-content: center;">
+                    <div>
+                        <h2>Fem<span style="color: var(--white);">♀</span>na</h2>
+                        <p>Bringing Change Through Technology</p>
+                    </div>
+                    <img src="/api/placeholder/200/250" alt="Woman with crown" style="max-height: 180px; border-radius: 10px; margin-left: 20px;">
+                </div>
+            </div>
+            
+            <div class="card card-pink" style="grid-column: span 2;">
+                <div class="mobile-app">
+                    <div class="app-text">
+                        <h3>Mobile App</h3>
+                        <p>Coming Soon</p>
+                    </div>
+                    <div class="app-image">
+                        <img src="/api/placeholder/120/200" alt="Mobile app preview">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Cards -->
+        <section class="cards-section">
+            <div class="card card-dark" style="grid-column: span 2;">
+                <div class="card-content">
+                    <h2>Fem<span style="color: var(--primary);">♀</span>na</h2>
+                    <p>Makes You Confident</p>
+                </div>
+            </div>
+            
+            <div class="team" style="grid-column: span 2;">
+                <h3>Dedicated Team Of Experts For All Your Queries</h3>
+                <p>Waiting Just A Phone Call Away</p>
+            </div>
+        </section>
+
+        <!-- Join Section -->
+        <section class="join">
+            <h2>Fem<span style="color: var(--primary);">♀</span>na</h2>
+            <p>Join The Phenomenon</p>
+            <a href="#" class="btn btn-primary animate-pulse" style="margin-top: 15px;">Login/Register <i class="fas fa-arrow-right"></i></a>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq">
+            <h2>FAQs</h2>
+            <!-- FAQ items would go here -->
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Fem<span style="color: var(--white);">♀</span>na</h2>
+                    <p>Bringing Change Through Technology</p>
+                </div>
+                
+                <div class="social-section">
+                    <h3>Get Social</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <a href="#">Copyrights</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const menu = document.getElementById('menu');
+            
+            menuToggle.addEventListener('click', function() {
+                menu.classList.toggle('active');
+                const icon = menuToggle.querySelector('i');
+                if (menu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Scroll animation
+            const animateElements = document.querySelectorAll('.animate-fadeIn');
+            
+            function checkIfInView() {
+                animateElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementBottom = element.getBoundingClientRect().bottom;
+                    const isVisible = (elementTop <= window.innerHeight) && (elementBottom >= 0);
+                    
+                    if (isVisible) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            }
+            
+            // Initial check
+            checkIfInView();
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkIfInView);
+            
+            // Stats counter animation
+            const stats = document.querySelectorAll('.stat h3');
+            
+            function animateCounter(el, target) {
+                const duration = 2000; // 2 seconds
+                const step = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        el.textContent = Math.floor(current) + '+';
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        el.textContent = target + '+';
+                    }
+                };
+                
+                updateCounter();
+            }
+            
+            // Start animations when elements are in view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.textContent);
+                        animateCounter(entry.target, target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            stats.forEach(stat => {
+                observer.observe(stat);
+            });
+        });
+    </script>
+</body>
+</html>
