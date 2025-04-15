@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period Tracker</title>
+    <style>
+        :root {
+            --primary: #ff6b9d;
+            --primary-light: #ffcee0;
+            --primary-dark: #e54b7d;
+            --period: #ff99cc;
+            --fertile: #99ffcc;
+            --ovulation: #66ccff;
+            --pms: #ffcc99;
+            --shadow: 0 8px 16px rgba(255, 107, 157, 0.15);
+            --radius: 12px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff5f9 0%, #ffe6f0 100%);
+            color: #555;
+            margin: 0;
+            padding: 20px 0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: var(--primary-dark);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .input-section, .mood-tracker, .cramps-tracker, .cards {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .input-section:hover, .mood-tracker:hover, .cramps-tracker:hover {
+            transform: translateY(-5px);
+        }
+        
+        label {
+            display: block;
+            margin: 12px 0 8px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        input[type="date"], input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #f0f0f0;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(255, 75, 148, 0.2);
+            display: block;
+            margin: 20px auto;
+            width: auto;
+            min-width: 200px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 75, 148, 0.3);
+        }
+        
+        .calendar-container {
+            margin: 30px 0;
+        }
+        
+        .calendar-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .day-header {
+            text-align: center;
+            font-weight: 600;
+            color: #666;
+            padding: 8px 0;
+        }
+        
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .day {
+            padding: 15px 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            position: relative;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .period-day { 
+            background: var(--period); 
+            color: #fff;
+            border-color: var(--period);
+        }
+        
+        .fertile-day { 
+            background: var(--fertile); 
+            border-color: var(--fertile);
+        }
+        
+        .ovulation-day { 
+            background: var(--ovulation); 
+            color: #fff;
+            border-color: var(--ovulation);
+            font-weight: 700;
+        }
+        
+        .pms-day { 
+            background: var(--pms); 
+            border-color: var(--pms);
+        }
+        
+        .card {
+            background: linear-gradient(135deg, var(--primary-light) 0%, #fff 100%);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary);
+        }
+        
+        .card h3 {
+            color: var(--primary-dark);
+            margin-top: 0;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #f0f0f0;
+            outline: none;
+            /* -webkit-appearance: none; */
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+        
+        #quote, #crampsSuggestion {
+            padding: 15px;
+            background: var(--primary-light);
+            border-radius: 8px;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            .day {
+                padding: 10px 5px;
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><b>Period Tracker</h1></b>
+        
+        <!-- Period Input -->
+        <div class="input-section">
+            <h2>Track Your Cycle</h2>
+            <label for="lastPeriod">Last Period Start Date:</label>
+            <input type="date" id="lastPeriod">
+            <label for="cycleLength">Average Cycle Length (Days):</label>
+            <input type="number" id="cycleLength" min="21" max="35" placeholder="28">
+            <button onclick="calculateCycle()">Generate My Calendar</button>
+        </div>
+        
+        <!-- Calendar Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--period);"></div>
+                <span>Period</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--fertile);"></div>
+                <span>Fertile Window</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--ovulation);"></div>
+                <span>Ovulation</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--pms);"></div>
+                <span>PMS</span>
+            </div>
+        </div>
+        
+        <!-- Calendar -->
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="day-header">Sun</div>
+                <div class="day-header">Mon</div>
+                <div class="day-header">Tue</div>
+                <div class="day-header">Wed</div>
+                <div class="day-header">Thu</div>
+                <div class="day-header">Fri</div>
+                <div class="day-header">Sat</div>
+            </div>
+            <div class="calendar" id="calendar"></div>
+        </div>
+        
+        <!-- Cards Section -->
+        <div class="cards" id="infoCards"></div>
+        
+        <!-- Mood Tracker -->
+        <div class="mood-tracker">
+            <h2>Mood Tracker</h2>
+            <select id="moodSelect" onchange="generateQuote()">
+                <option value="">How are you feeling today?</option>
+                <option value="happy">Happy</option>
+                <option value="sad">Sad</option>
+                <option value="angry">Angry</option>
+                <option value="anxious">Anxious</option>
+                <option value="tired">Tired</option>
+                <option value="energetic">Energetic</option>
+            </select>
+            <p id="quote"></p>
+        </div>
+        
+        <!-- Cramps Tracker -->
+        <div class="cramps-tracker">
+            <h2>Cramps Level</h2>
+            <input type="range" id="crampsSlider" min="1" max="10" step="1" oninput="generateSuggestion()">
+            <div class="slider-labels" style="display: flex; justify-content: space-between; margin: 10px 0;">
+                <span>Mild</span>
+                <span>Moderate</span>
+                <span>Severe</span>
+            </div>
+            <p id="crampsSuggestion"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateCycle() {
+            let lastPeriod = new Date(document.getElementById("lastPeriod").value);
+            let cycleLength = parseInt(document.getElementById("cycleLength").value) || 28;
+            
+            if (!lastPeriod || isNaN(lastPeriod.getTime())) {
+                alert("Please select a valid date for your last period");
+                return;
+            }
+            
+            let calendar = document.getElementById("calendar");
+            calendar.innerHTML = "";
+            let infoCards = document.getElementById("infoCards");
+            infoCards.innerHTML = "";
+            
+            let periodDays = 5;
+            let ovulationDay = new Date(lastPeriod);
+            ovulationDay.setDate(ovulationDay.getDate() + Math.floor(cycleLength / 2));
+            
+            let fertileStart = new Date(ovulationDay);
+            fertileStart.setDate(fertileStart.getDate() - 3);
+            
+            let fertileEnd = new Date(ovulationDay);
+            fertileEnd.setDate(fertileEnd.getDate() + 1);
+            
+            let pmsStart = new Date(lastPeriod);
+            pmsStart.setDate(pmsStart.getDate() + cycleLength - 5);
+            
+            let pmsEnd = new Date(lastPeriod);
+            pmsEnd.setDate(pmsEnd.getDate() + cycleLength - 1);
+            
+            // Calculate start date for the calendar (Sunday before the period)
+            let startDate = new Date(lastPeriod);
+            startDate.setDate(startDate.getDate() - startDate.getDay());
+            
+            // Show 5 weeks (35 days)
+            for (let i = 0; i < 35; i++) {
+                let currentDate = new Date(startDate);
+                currentDate.setDate(startDate.getDate() + i);
+                
+                let day = document.createElement("div");
+                day.classList.add("day");
+                day.innerText = currentDate.getDate();
+                
+                // Check if this date is within the cycle we're tracking
+                let daysSinceLastPeriod = Math.floor((currentDate - lastPeriod) / (24 * 60 * 60 * 1000));
+                if (daysSinceLastPeriod >= 0 && daysSinceLastPeriod < cycleLength) {
+                    // Period days
+                    if (daysSinceLastPeriod < periodDays) {
+                        day.classList.add("period-day");
+                    }
+                    
+                    // Fertile window
+                    if (currentDate >= fertileStart && currentDate <= fertileEnd) {
+                        day.classList.add("fertile-day");
+                    }
+                    
+                    // Ovulation day
+                    if (currentDate.getDate() === ovulationDay.getDate() && 
+                        currentDate.getMonth() === ovulationDay.getMonth() && 
+                        currentDate.getFullYear() === ovulationDay.getFullYear()) {
+                        day.classList.add("ovulation-day");
+                    }
+                    
+                    // PMS days
+                    if (currentDate >= pmsStart && currentDate <= pmsEnd) {
+                        day.classList.add("pms-day");
+                    }
+                }
+                
+                calendar.appendChild(day);
+            }
+            
+            // Create info cards with more details
+            let nextPeriod = new Date(lastPeriod);
+            nextPeriod.setDate(nextPeriod.getDate() + cycleLength);
+            
+            infoCards.innerHTML = `
+                <div class='card'>
+                    <h3>Cycle Summary</h3>
+                    <p>Your cycle length: ${cycleLength} days</p>
+                    <p>Period phase: ${lastPeriod.toDateString()} - ${new Date(lastPeriod.getTime() + (periodDays - 1) * 24 * 60 * 60 * 1000).toDateString()}</p>
+                </div>
+                
+                <div class='card'>
+                    <h3>Fertility Window</h3>
+                    <p>Fertile days: ${fertileStart.toDateString()} - ${fertileEnd.toDateString()}</p>
+                    <p>Ovulation occurs around: ${ovulationDay.toDateString()}</p>
+                </div>
+                
+                <div class='card'>
+                    <h3>Next Cycle</h3>
+                    <p>PMS phase: ${pmsStart.toDateString()} - ${pmsEnd.toDateString()}</p>
+                    <p>Your next period is expected to start around: ${nextPeriod.toDateString()}</p>
+                </div>
+            `;
+        }
+        
+        function generateQuote() {
+            let mood = document.getElementById("moodSelect").value;
+            let quoteElement = document.getElementById("quote");
+            
+            if (!mood) {
+                quoteElement.textContent = "";
+                return;
+            }
+            
+            const quotes = {
+                "happy": "Happiness is a wonderful part of your cycle. Enjoy this positive energy!",
+                "sad": "It's okay to feel down sometimes. Be gentle with yourself today.",
+                "angry": "Anger can be related to hormone fluctuations. Try deep breathing or gentle movement.",
+                "anxious": "Anxiety is common during hormonal shifts. Practice self-care and mindfulness.",
+                "tired": "Rest is important! Your body might need extra sleep during certain phases.",
+                "energetic": "Great time to channel this energy into activities you enjoy!"
+            };
+            
+            quoteElement.textContent = quotes[mood] || "Take note of your mood patterns throughout your cycle.";
+        }
+        
+        function generateSuggestion() {
+            let level = document.getElementById("crampsSlider").value;
+            let suggestionElement = document.getElementById("crampsSuggestion");
+            
+            const suggestions = [
+                "",
+                "Very mild cramps. Stay hydrated and continue normal activities.",
+                "Mild discomfort. Consider light stretching or a warm drink.",
+                "Noticeable cramps. A heating pad might provide relief.",
+                "Moderate cramps. Rest if needed and consider over-the-counter pain relief.",
+                "Uncomfortable cramps. Take time to rest and use heat therapy.",
+                "Significant discomfort. Consider pain medication and rest.",
+                "Strong cramps. Take medication if needed and prioritize rest.",
+                "Severe cramps. Use medication, heat therapy, and rest.",
+                "Very severe cramps. Contact your healthcare provider if this is unusual for you.",
+                "Extreme pain. Please consult with a healthcare provider."
+            ];
+            
+            suggestionElement.textContent = suggestions[level];
+        }
+    </script>
+</body>
+</html>
