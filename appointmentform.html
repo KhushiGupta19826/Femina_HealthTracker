@@ -6,45 +6,108 @@
     <title>Book an Appointment</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #fce4ec;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
             text-align: center;
-            padding: 50px;
+            padding: 50px 20px;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .container {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: inline-block;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(255, 64, 129, 0.2);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, #ff4081, #f50057);
         }
         h2 {
             color: #ff4081;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
         }
         form {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 16px;
+        }
+        .input-group {
+            width: 100%;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #616161;
+            font-size: 14px;
+            font-weight: 500;
         }
         input, select {
-            width: 80%;
-            padding: 8px;
-            border: 1px solid #ff4081;
-            border-radius: 5px;
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            border-color: #ff4081;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.2);
+        }
+        input::placeholder {
+            color: #bdbdbd;
         }
         button {
-            background: #ff4081;
+            background: linear-gradient(to right, #ff4081, #f50057);
             color: white;
-            padding: 10px;
+            padding: 14px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
-            width: 85%;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(255, 64, 129, 0.2);
         }
         button:hover {
-            background: #ff5a92;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 64, 129, 0.3);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .form-footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #757575;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -53,18 +116,36 @@
 <div class="container">
     <h2>Book an Appointment</h2>
     <form id="appointment-form">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <input type="tel" name="phone" placeholder="Your Phone Number" required>
+        <div class="input-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        </div>
         
-        <label for="time">Preferred Timing:</label>
-        <select name="time" required>
-            <option value="Morning">Morning</option>
-            <option value="Afternoon">Afternoon</option>
-            <option value="Evening">Evening</option>
-        </select>
+        <div class="input-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="time">Preferred Timing</label>
+            <select id="time" name="time" required>
+                <option value="" disabled selected>Select a time slot</option>
+                <option value="Morning">Morning (9 AM - 12 PM)</option>
+                <option value="Afternoon">Afternoon (1 PM - 4 PM)</option>
+                <option value="Evening">Evening (5 PM - 8 PM)</option>
+            </select>
+        </div>
 
         <button type="submit">Confirm Appointment</button>
+        
+        <div class="form-footer">
+            We'll confirm your appointment via email shortly
+        </div>
     </form>
 </div>
 
