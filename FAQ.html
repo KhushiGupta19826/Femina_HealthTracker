@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Femina - FAQ</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff0f5;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #ff4d94;
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .faq {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .question {
+      padding: 1rem;
+      font-weight: bold;
+      background-color: #ffe6f0;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .question::after {
+      content: "+";
+      position: absolute;
+      right: 1rem;
+      font-size: 1.2rem;
+      transition: transform 0.2s;
+    }
+
+    .faq.active .question::after {
+      content: "-";
+    }
+
+    .answer {
+      padding: 1rem;
+      display: none;
+      border-top: 1px solid #f4c2d7;
+      background-color: #fffafd;
+    }
+
+    .back-button {
+      display: block;
+      width: fit-content;
+      margin: 2rem auto;
+      padding: 0.75rem 1.5rem;
+      background-color: #ff4d94;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+      background-color: #e04383;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Femina - Frequently Asked Questions</h1>
+  </header>
+
+  <main class="faq-container">
+    <div class="faq">
+      <div class="question">What is Femina?</div>
+      <div class="answer">Femina is a menstrual health and wellness tracking app that helps you monitor periods, symptoms, moods, and access helpful resources.</div>
+    </div>
+
+    <div class="faq">
+      <div class="question">Can I track my symptoms and mood?</div>
+      <div class="answer">Yes! Femina lets you log daily symptoms, mood changes, and flow levels to better understand your cycle.</div>
+    </div>
+
+    <div class="faq">
+      <div class="question">Is Femina free to use?</div>
+      <div class="answer">Absolutely. Femina is completely free to use and doesn’t require any subscription.</div>
+    </div>
+
+    <div class="faq">
+      <div class="question">Does Femina predict my next period?</div>
+      <div class="answer">Yes, it uses your past data to estimate your next period, fertile window, and PMS phase.</div>
+    </div>
+
+    <div class="faq">
+      <div class="question">Will Femina work offline?</div>
+      <div class="answer">Currently, Femina is a static web app and some features may not work offline. Future updates will improve this!</div>
+    </div>
+  </main>
+
+  <a href="index.html" class="back-button">← Back to Home</a>
+
+  <script>
+    const faqs = document.querySelectorAll('.faq');
+
+    faqs.forEach(faq => {
+      const question = faq.querySelector('.question');
+      question.addEventListener('click', () => {
+        faq.classList.toggle('active');
+        const answer = faq.querySelector('.answer');
+        if (faq.classList.contains('active')) {
+          answer.style.display = 'block';
+        } else {
+          answer.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
