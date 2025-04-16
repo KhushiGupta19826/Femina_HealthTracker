@@ -1,0 +1,31 @@
+project:
+  name: Femina
+  framework: None
+  language: HTML, CSS, JavaScript
+  package_manager: None
+
+structure:
+  root:
+    - index.html
+    - resources.html
+    - periodtracker.html
+    - journal.html
+    - doctorsappointment.html
+    - form.html
+  folders: []
+  future_structure_plan:
+    - assets/
+    - css/
+    - js/
+    - images/
+environment:
+  hosting: Local (can be deployed to GitHub Pages or Netlify)
+  backend: Not implemented
+  database: None
+
+description: >
+  Femina is a menstrual health and wellness tracking web app that empowers users to track their periods,
+  moods, pain levels, and overall health. It also provides educational resources, a journal page with
+  intelligent keyword detection, doctor appointment booking UI, and an emergency ambulance form page. 
+  Currently a static site built using HTML, CSS, and JavaScript, Femina is planned to evolve with a React frontend,
+  Tailwind styling, and a Node.js backend with smart features like symptom-based FAQ suggestions and predictive alerts.
