@@ -4,129 +4,239 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Femina - FAQ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #fff0f5;
-      color: #333;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #ff4d94;
+      --primary-light: #ffe6f0;
+      --primary-dark: #e04383;
+      --background: #fff0f5;
+      --text: #333333;
+      --white: #ffffff;
+      --shadow: rgba(255, 77, 148, 0.2);
+    }
+    
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
     .header {
-      background-color: #ff4d94;
-      padding: 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 3rem 1rem;
       text-align: center;
-      color: white;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px var(--shadow);
+    }
+    
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .header:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+      transform: rotate(45deg);
     }
 
     .faq-container {
       max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
     }
 
     .faq {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      margin-bottom: 1rem;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
       overflow: hidden;
-      transition: all 0.3s ease-in-out;
+      transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    
+    .faq:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
 
     .question {
-      padding: 1rem;
-      font-weight: bold;
-      background-color: #ffe6f0;
+      padding: 1.2rem 1.5rem;
+      font-weight: 600;
+      background-color: var(--white);
       cursor: pointer;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+    
+    .question:hover {
+      background-color: rgba(255, 230, 240, 0.5);
     }
 
-    .question::after {
-      content: "+";
-      position: absolute;
-      right: 1rem;
+    .question-text {
+      flex-grow: 1;
+    }
+
+    .icon {
+      color: var(--primary);
       font-size: 1.2rem;
-      transition: transform 0.2s;
+      transition: transform 0.4s ease;
     }
 
-    .faq.active .question::after {
-      content: "-";
+    .faq.active .icon {
+      transform: rotate(180deg);
     }
 
     .answer {
-      padding: 1rem;
-      display: none;
-      border-top: 1px solid #f4c2d7;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 1.5rem;
       background-color: #fffafd;
+      border-top: 0 solid #f4c2d7;
+      transition: max-height 0.4s ease, padding 0.4s ease, border-top 0.2s ease;
+    }
+
+    .faq.active .answer {
+      max-height: 200px;
+      padding: 1.5rem;
+      border-top: 1px solid #f4c2d7;
     }
 
     .back-button {
-      display: block;
-      width: fit-content;
-      margin: 2rem auto;
-      padding: 0.75rem 1.5rem;
-      background-color: #ff4d94;
-      color: white;
+      display: inline-flex;
+      align-items: center;
+      margin: 2rem auto 3rem;
+      padding: 0.9rem 1.8rem;
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: var(--white);
       text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background-color 0.3s;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 4px 15px var(--shadow);
+      transition: all 0.3s ease;
     }
-
+    
     .back-button:hover {
-      background-color: #e04383;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 77, 148, 0.4);
+    }
+    
+    .back-button i {
+      margin-right: 8px;
+    }
+    
+    .back-button-container {
+      text-align: center;
+    }
+    
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .faq-container {
+        margin: 2rem auto;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="header">
+  <header class="header" class="animate__animated animate__fadeIn">
     <h1>Femina - Frequently Asked Questions</h1>
   </header>
 
   <main class="faq-container">
-    <div class="faq">
-      <div class="question">What is Femina?</div>
+    <div class="faq animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+      <div class="question">
+        <div class="question-text">What is Femina?</div>
+        <i class="icon fas fa-chevron-down"></i>
+      </div>
       <div class="answer">Femina is a menstrual health and wellness tracking app that helps you monitor periods, symptoms, moods, and access helpful resources.</div>
     </div>
 
-    <div class="faq">
-      <div class="question">Can I track my symptoms and mood?</div>
+    <div class="faq animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+      <div class="question">
+        <div class="question-text">Can I track my symptoms and mood?</div>
+        <i class="icon fas fa-chevron-down"></i>
+      </div>
       <div class="answer">Yes! Femina lets you log daily symptoms, mood changes, and flow levels to better understand your cycle.</div>
     </div>
 
-    <div class="faq">
-      <div class="question">Is Femina free to use?</div>
-      <div class="answer">Absolutely. Femina is completely free to use and doesn’t require any subscription.</div>
+    <div class="faq animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+      <div class="question">
+        <div class="question-text">Is Femina free to use?</div>
+        <i class="icon fas fa-chevron-down"></i>
+      </div>
+      <div class="answer">Absolutely. Femina is completely free to use and doesn't require any subscription.</div>
     </div>
 
-    <div class="faq">
-      <div class="question">Does Femina predict my next period?</div>
+    <div class="faq animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+      <div class="question">
+        <div class="question-text">Does Femina predict my next period?</div>
+        <i class="icon fas fa-chevron-down"></i>
+      </div>
       <div class="answer">Yes, it uses your past data to estimate your next period, fertile window, and PMS phase.</div>
     </div>
 
-    <div class="faq">
-      <div class="question">Will Femina work offline?</div>
+    <div class="faq animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
+      <div class="question">
+        <div class="question-text">Will Femina work offline?</div>
+        <i class="icon fas fa-chevron-down"></i>
+      </div>
       <div class="answer">Currently, Femina is a static web app and some features may not work offline. Future updates will improve this!</div>
     </div>
   </main>
 
-  <a href="index.html" class="back-button">← Back to Home</a>
+  <div class="back-button-container">
+    <a href="index.html" class="back-button animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+  </div>
 
   <script>
-    const faqs = document.querySelectorAll('.faq');
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqs = document.querySelectorAll('.faq');
 
-    faqs.forEach(faq => {
-      const question = faq.querySelector('.question');
-      question.addEventListener('click', () => {
-        faq.classList.toggle('active');
-        const answer = faq.querySelector('.answer');
-        if (faq.classList.contains('active')) {
-          answer.style.display = 'block';
-        } else {
-          answer.style.display = 'none';
-        }
+      faqs.forEach(faq => {
+        const question = faq.querySelector('.question');
+        question.addEventListener('click', () => {
+          // Close other FAQs
+          faqs.forEach(item => {
+            if (item !== faq && item.classList.contains('active')) {
+              item.classList.remove('active');
+            }
+          });
+          
+          // Toggle current FAQ
+          faq.classList.toggle('active');
+        });
       });
     });
   </script>
