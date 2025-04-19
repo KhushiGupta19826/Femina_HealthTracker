@@ -1,26 +1,412 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Login | Femina</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary: #ff6b98;
+      --primary-dark: #e64980;
+      --secondary: #6c5ce7;
+      --secondary-dark: #5341d4;
+      --text: #2d3436;
+      --light-text: #636e72;
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --error: #ff7675;
+      --success: #55efc4;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+      display: flex;
+    }
+    
+    .left-panel {
+      flex: 1;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+      padding: 60px 40px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .left-panel::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.1);
+      top: -100px;
+      right: -100px;
+      border-radius: 50%;
+    }
+    
+    .left-panel::after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      bottom: -50px;
+      left: -50px;
+      border-radius: 50%;
+    }
+    
+    .brand {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      z-index: 1;
+    }
+    
+    .tagline {
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-top: 1rem;
+      z-index: 1;
+    }
+    
+    .features {
+      margin-top: 4rem;
+      z-index: 1;
+    }
+    
+    .features h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-icon {
+      width: 30px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+    }
+    
+    .right-panel {
+      flex: 1;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    .form-toggle {
+      display: flex;
+      margin-bottom: 30px;
+      background: #f1f2f6;
+      border-radius: 8px;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    
+    .toggle-btn {
+      flex: 1;
+      padding: 15px;
+      text-align: center;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--light-text);
+      transition: color 0.3s ease;
+      z-index: 1;
+    }
+    
+    .toggle-btn.active {
+      color: white;
+    }
+    
+    .slider {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    
+    .forms-container {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+    }
+    
+    .forms-wrapper {
+      display: flex;
+      transition: transform 0.3s ease;
+      height: 100%;
+      width: 200%;
+    }
+    
+    .form-section {
+      width: 50%;
+      padding-right: 20px;
+    }
+    
+    .form-title {
+      color: var(--text);
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    form {
+      width: 100%;
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    input {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      color: var(--text);
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 5px 15px rgba(238, 130, 238, 0.1);
+    }
+    
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 15px rgba(238, 130, 238, 0.2);
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(238, 130, 238, 0.3);
+    }
+    
+    .bottom-text {
+      text-align: center;
+      margin-top: 20px;
+      color: var(--light-text);
+      font-size: 0.9rem;
+    }
+    
+    .bottom-text a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        max-width: 500px;
+      }
+      
+      .left-panel {
+        padding: 30px;
+        text-align: center;
+      }
+      
+      .features {
+        display: none;
+      }
+      
+      .right-panel {
+        padding: 30px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>Login</h2>
-  <form id="loginForm">
-    <input type="email" name="email" placeholder="Email" required /><br>
-    <input type="password" name="password" placeholder="Password" required /><br>
-    <button type="submit">Login</button>
-  </form>
+  <div class="container">
+    <div class="left-panel">
+      <div>
+        <div class="brand">Femina</div>
+        <div class="tagline">Your personal health companion</div>
+      </div>
+      <div class="features">
+        <h3>Features</h3>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div>Track your menstrual cycle</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div>Personal health journal</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div>Wellness insights</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="right-panel">
+      <div class="form-toggle">
+        <div class="toggle-btn login-toggle active">Login</div>
+        <div class="toggle-btn signup-toggle">Sign Up</div>
+        <div class="slider"></div>
+      </div>
+      
+      <div class="forms-container">
+        <div class="forms-wrapper">
+          <div class="form-section login-section">
+            <form id="loginForm">
+              <div class="input-group">
+                <input type="email" name="email" placeholder="Email" required />
+              </div>
+              <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required />
+              </div>
+              <button type="submit">Login</button>
+            </form>
+            <div class="bottom-text">
+              Don't have an account? <a href="#" class="to-signup">Sign up</a>
+            </div>
+          </div>
+          
+          <div class="form-section signup-section">
+            <form id="signupForm">
+              <div class="input-group">
+                <input type="email" name="email" placeholder="Email" required />
+              </div>
+              <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required />
+              </div>
+              <button type="submit">Create Account</button>
+            </form>
+            <div class="bottom-text">
+              Already have an account? <a href="#" class="to-login">Login</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <h2>Sign Up</h2>
-  <form id="signupForm">
-    <input type="email" name="email" placeholder="Email" required /><br>
-    <input type="password" name="password" placeholder="Password" required /><br>
-    <button type="submit">Sign Up</button>
-  </form>
+  <script>
+    // This script handles the toggle between login and signup forms
+    const loginToggle = document.querySelector('.login-toggle');
+    const signupToggle = document.querySelector('.signup-toggle');
+    const slider = document.querySelector('.slider');
+    const formsWrapper = document.querySelector('.forms-wrapper');
+    const toSignup = document.querySelector('.to-signup');
+    const toLogin = document.querySelector('.to-login');
 
-  <script src="js/auth.js"></script>
+    function showLogin() {
+      loginToggle.classList.add('active');
+      signupToggle.classList.remove('active');
+      slider.style.transform = 'translateX(0)';
+      formsWrapper.style.transform = 'translateX(0)';
+    }
+
+    function showSignup() {
+      loginToggle.classList.remove('active');
+      signupToggle.classList.add('active');
+      slider.style.transform = 'translateX(100%)';
+      formsWrapper.style.transform = 'translateX(-50%)';
+    }
+
+    loginToggle.addEventListener('click', showLogin);
+    signupToggle.addEventListener('click', showSignup);
+    toSignup.addEventListener('click', (e) => {
+      e.preventDefault();
+      showSignup();
+    });
+    toLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      showLogin();
+    });
+  </script>
+
+  <!-- Keep the original auth.js intact -->
+  <script>
+    // js/auth.js
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (signupForm) {
+      signupForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const email = signupForm.email.value;
+        const password = signupForm.password.value;
+
+        const existingUser = users.find(user => user.email === email);
+        if (existingUser) return alert("User already exists!");
+
+        users.push({ email, password, journal: [], periodData: [] });
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("Signup successful. Please log in.");
+        signupForm.reset();
+        showLogin(); // Automatically switch to login form after successful signup
+      });
+    }
+
+    if (loginForm) {
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const email = loginForm.email.value;
+        const password = loginForm.password.value;
+
+        const user = users.find(u => u.email === email && u.password === password);
+        if (!user) return alert("Invalid login!");
+
+        localStorage.setItem("loggedInUser", email);
+        window.location.href = "periodtracker.html"; // after login
+      });
+    }
+  </script>
 </body>
 </html>
