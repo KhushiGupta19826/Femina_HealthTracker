@@ -6,120 +6,314 @@
     <title>Book an Appointment</title>
     <style>
         /* General Styling */
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #fce4ec;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f2f7;
+            color: #333;
+            line-height: 1.6;
         }
 
         /* Header Styling */
         header {
-            background: #d81b60;
+            background: linear-gradient(135deg, #ff7eb3 0%, #d81b60 100%);
             color: white;
             padding: 20px;
-            text-align: left;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         header h1 {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 700;
             margin: 0;
-            padding-left: 20px;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .back-button {
-            background: #ad1457;
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-right: 20px;
-            transition: 0.3s;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:before {
+            content: "←";
+            margin-right: 8px;
+            font-size: 18px;
         }
 
         .back-button:hover {
-            background: #880e4f;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            margin: 30px 0;
+            color: #d81b60;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+
+        /* Search and Filter */
+        .search-container {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+
+        .search-box {
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            padding: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            border-radius: 50px;
+        }
+
+        .search-box button {
+            background: #ff4081;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-box button:hover {
+            background: #e91e63;
+        }
+
+        .filter-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-chip {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-chip:hover, .filter-chip.active {
+            background: #ff4081;
+            color: white;
+            border-color: #ff4081;
         }
 
         /* Doctor Cards */
         #doctors-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 50px;
         }
 
         .doctor-card {
-            background: #ffe6ec;
-            border: 2px solid #ff4081;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px;
-            width: 300px;
-            text-align: left;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Hover effect */
         .doctor-card:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            background-color: #ffccd5;
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .doctor-card h2 {
-            color: #ff4081;
-            font-size: 20px;
+        .doctor-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .doctor-card p {
-            margin: 5px 0;
+        .doctor-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .doctor-availability {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .doctor-content {
+            padding: 20px;
+        }
+
+        .doctor-name {
+            color: #d81b60;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .doctor-specialty {
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .doctor-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #555;
             font-size: 14px;
         }
 
-        .doctor-card button {
-            background: #ff4081;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 5px;
+        .doctor-info i {
+            margin-right: 8px;
+            width: 18px;
+            text-align: center;
+            color: #ff4081;
         }
 
-        .doctor-card button:hover {
-            background: #ff5a92;
+        .rating {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-right: 5px;
+        }
+
+        .reviews {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .doctor-actions {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #ff4081;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e91e63;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f8f8f8;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #eee;
+            transform: translateY(-2px);
         }
 
         /* Chat Box Styling */
         .chat-box {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
             background: white;
-            border: 2px solid #ff4081;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             display: none;
             flex-direction: column;
             overflow: hidden;
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
         .chat-header {
-            background: #ff4081;
+            background: linear-gradient(135deg, #ff7eb3 0%, #d81b60 100%);
             color: white;
-            padding: 10px;
-            font-weight: bold;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -127,46 +321,207 @@
 
         .chat-header span {
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .chat-header span:hover {
+            transform: rotate(90deg);
         }
 
         .chat-messages {
-            height: 200px;
+            height: 300px;
             overflow-y: auto;
-            padding: 10px;
-            background: #fff5f7;
+            padding: 15px;
+            background: #f9f2f7;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .doctor-message {
+            background: #fff;
+            border-top-left-radius: 5px;
+            align-self: flex-start;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-message {
+            background: #ff4081;
+            color: white;
+            border-top-right-radius: 5px;
+            align-self: flex-end;
         }
 
         .chat-input {
             display: flex;
-            padding: 10px;
-            border-top: 1px solid #ff4081;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
         }
 
         .chat-input input {
             flex: 1;
-            padding: 5px;
-            border: 1px solid #ff4081;
-            border-radius: 5px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        .chat-input input:focus {
+            border-color: #ff4081;
         }
 
         .chat-input button {
             background: #ff4081;
             color: white;
             border: none;
-            padding: 5px 10px;
-            margin-left: 5px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-left: 10px;
             cursor: pointer;
-            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: #e91e63;
+        }
+
+        /* Chat bubble icon */
+        .chat-bubble {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #ff4081;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background 0.3s;
+            z-index: 900;
+        }
+
+        .chat-bubble:hover {
+            transform: scale(1.1);
+            background: #e91e63;
+        }
+
+        .chat-bubble i {
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #doctors-list {
+                grid-template-columns: 1fr;
+                padding: 0 15px 40px;
+            }
+            
+            .chat-box {
+                width: 90%;
+                right: 5%;
+                bottom: 80px;
+            }
+            
+            .doctor-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            text-align: center;
+            padding: 30px;
+            display: none;
+        }
+
+        .loader span {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ff4081;
+            margin: 0 5px;
+            animation: loader 0.9s infinite alternate;
+        }
+
+        .loader span:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .loader span:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes loader {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Font icons (simulated) */
+        .icon {
+            display: inline-block;
+            width: 20px;
+            text-align: center;
+            font-weight: bold;
         }
     </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>Book an Appointment</h1>
+        <h1>FemHealth Care</h1>
         <a href="index.html" class="back-button">Back to Home</a>
     </header>
 
+    <h1 class="page-title">Find Your Specialist</h1>
+    <p class="subtitle">Book appointments with top women's health specialists to receive personalized care tailored to your needs</p>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" placeholder="Search by doctor name or specialty..." id="searchInput">
+            <button><i class="fas fa-search"></i> Search</button>
+        </div>
+        
+        <div class="filter-options">
+            <div class="filter-chip active">All Specialists</div>
+            <div class="filter-chip">Gynecologist</div>
+            <div class="filter-chip">Fertility</div>
+            <div class="filter-chip">PCOS</div>
+            <div class="filter-chip">Prenatal Care</div>
+            <div class="filter-chip">Rating 4.8+</div>
+        </div>
+    </div>
+
+    <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
     <section id="doctors-list">
         <!-- Doctors will be loaded dynamically -->
     </section>
@@ -174,41 +529,156 @@
     <!-- Chat Box -->
     <div class="chat-box" id="chatBox">
         <div class="chat-header">
-            Chat with Doctor <span onclick="closeChat()">×</span>
+            Chat with <span id="doctorChatName">Doctor</span> <span onclick="closeChat()">×</span>
         </div>
         <div class="chat-messages" id="chatMessages"></div>
         <div class="chat-input">
             <input type="text" id="chatInput" placeholder="Type a message..." />
-            <button onclick="sendMessage()">Send</button>
+            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
         </div>
+    </div>
+    
+    <!-- Chat Button -->
+    <div class="chat-bubble" id="chatBubble" onclick="toggleSupportChat()">
+        <i class="fas fa-comments"></i>
     </div>
 
     <script>
         const doctors = [
-            { id: 1, name: "Dr. Aisha Khan", specialty: "Gynecologist & Obstetrician", experience: "10+ years", rating: 4.9 },
-            { id: 2, name: "Dr. Priya Sharma", specialty: "Reproductive Health Specialist", experience: "8+ years", rating: 4.8 },
-            { id: 3, name: "Dr. Emily Watson", specialty: "Hormonal Health Expert", experience: "12+ years", rating: 4.7 },
-            { id: 4, name: "Dr. Rina Kapoor", specialty: "Fertility Consultant", experience: "15+ years", rating: 4.9 },
-            { id: 5, name: "Dr. Sophia Lee", specialty: "Menstrual Health Specialist", experience: "9+ years", rating: 4.8 },
-            { id: 6, name: "Dr. Sara Patel", specialty: "PCOS & Endometriosis Specialist", experience: "11+ years", rating: 4.6 },
-            { id: 7, name: "Dr. Hannah Brown", specialty: "Prenatal & Postnatal Care", experience: "14+ years", rating: 4.9 }
+            { 
+                id: 1, 
+                name: "Dr. Aisha Khan", 
+                specialty: "Gynecologist & Obstetrician", 
+                experience: "10+ years", 
+                rating: 4.9,
+                reviews: 127,
+                photo: "/api/placeholder/350/200",
+                availability: "Available Today"
+            },
+            { 
+                id: 2, 
+                name: "Dr. Priya Sharma", 
+                specialty: "Reproductive Health Specialist", 
+                experience: "8+ years", 
+                rating: 4.8,
+                reviews: 83,
+                photo: "/api/placeholder/350/200", 
+                availability: "Next Available: Tomorrow"
+            },
+            { 
+                id: 3, 
+                name: "Dr. Emily Watson", 
+                specialty: "Hormonal Health Expert", 
+                experience: "12+ years", 
+                rating: 4.7,
+                reviews: 95,
+                photo: "/api/placeholder/350/200",
+                availability: "Available Today"
+            },
+            { 
+                id: 4, 
+                name: "Dr. Rina Kapoor", 
+                specialty: "Fertility Consultant", 
+                experience: "15+ years", 
+                rating: 4.9,
+                reviews: 156,
+                photo: "/api/placeholder/350/200",
+                availability: "Next Available: Friday"
+            },
+            { 
+                id: 5, 
+                name: "Dr. Sophia Lee", 
+                specialty: "Menstrual Health Specialist", 
+                experience: "9+ years", 
+                rating: 4.8,
+                reviews: 72,
+                photo: "/api/placeholder/350/200",
+                availability: "Available Today"
+            },
+            { 
+                id: 6, 
+                name: "Dr. Sara Patel", 
+                specialty: "PCOS & Endometriosis Specialist", 
+                experience: "11+ years", 
+                rating: 4.6,
+                reviews: 89,
+                photo: "/api/placeholder/350/200",
+                availability: "Next Available: Monday" 
+            },
+            { 
+                id: 7, 
+                name: "Dr. Hannah Brown", 
+                specialty: "Prenatal & Postnatal Care", 
+                experience: "14+ years", 
+                rating: 4.9,
+                reviews: 142,
+                photo: "/api/placeholder/350/200",
+                availability: "Available Today"
+            }
         ];
 
-        const doctorsList = document.getElementById("doctors-list");
+        // Simulate loading
+        document.querySelector('.loader').style.display = 'block';
+        
+        // Load doctors after a slight delay to show loading effect
+        setTimeout(() => {
+            document.querySelector('.loader').style.display = 'none';
+            loadDoctors(doctors);
+        }, 1000);
 
-        doctors.forEach(doctor => {
-            const doctorCard = document.createElement("div");
-            doctorCard.classList.add("doctor-card");
-            doctorCard.innerHTML = `
-                <h2>${doctor.name}</h2>
-                <p><strong>Specialty:</strong> ${doctor.specialty}</p>
-                <p><strong>Experience:</strong> ${doctor.experience}</p>
-                <p><strong>Rating:</strong> ⭐${doctor.rating}</p>
-                <button onclick="bookAppointment('${doctor.name}')">Book Appointment</button>
-                <button onclick="openChat('${doctor.name}')">Chat with Doctor</button>
-            `;
-            doctorsList.appendChild(doctorCard);
-        });
+        function loadDoctors(doctorsList) {
+            const doctorsContainer = document.getElementById("doctors-list");
+            doctorsContainer.innerHTML = '';
+            
+            doctorsList.forEach(doctor => {
+                // Generate stars based on rating
+                const fullStars = Math.floor(doctor.rating);
+                const hasHalfStar = doctor.rating % 1 >= 0.5;
+                let starsHTML = '';
+                
+                for (let i = 0; i < 5; i++) {
+                    if (i < fullStars) {
+                        starsHTML += '<i class="fas fa-star"></i>';
+                    } else if (i === fullStars && hasHalfStar) {
+                        starsHTML += '<i class="fas fa-star-half-alt"></i>';
+                    } else {
+                        starsHTML += '<i class="far fa-star"></i>';
+                    }
+                }
+                
+                const doctorCard = document.createElement("div");
+                doctorCard.classList.add("doctor-card");
+                doctorCard.innerHTML = `
+                    <div class="doctor-image" style="background-image: url('${doctor.photo}')">
+                        <div class="doctor-availability">${doctor.availability}</div>
+                    </div>
+                    <div class="doctor-content">
+                        <h2 class="doctor-name">${doctor.name}</h2>
+                        <p class="doctor-specialty">${doctor.specialty}</p>
+                        
+                        <div class="doctor-info">
+                            <i class="fas fa-briefcase"></i> 
+                            <span>${doctor.experience} Experience</span>
+                        </div>
+                        
+                        <div class="rating">
+                            <div class="stars">${starsHTML}</div>
+                            <div class="reviews">(${doctor.reviews} reviews)</div>
+                        </div>
+                        
+                        <div class="doctor-actions">
+                            <button class="btn btn-primary" onclick="bookAppointment('${doctor.name}')">
+                                <i class="fas fa-calendar-check"></i> Book Now
+                            </button>
+                            <button class="btn btn-secondary" onclick="openChat('${doctor.name}')">
+                                <i class="fas fa-comment-medical"></i> Chat
+                            </button>
+                        </div>
+                    </div>
+                `;
+                doctorsContainer.appendChild(doctorCard);
+            });
+        }
 
         function bookAppointment(doctorName) {
             window.location.href = `appointment-form.html?doctor=${encodeURIComponent(doctorName)}`;
@@ -218,22 +688,136 @@
 
         function openChat(doctorName) {
             currentDoctor = doctorName;
+            document.getElementById("doctorChatName").textContent = doctorName;
             document.getElementById("chatBox").style.display = "flex";
-            document.getElementById("chatMessages").innerHTML = `<p><strong>${doctorName}:</strong> Hello! How can I assist you?</p>`;
+            document.getElementById("chatMessages").innerHTML = `
+                <div class="message doctor-message">
+                    <strong>${doctorName}</strong><br>
+                    Hello! How can I assist you today? Feel free to ask any questions about your health concerns.
+                </div>
+            `;
+            document.getElementById("chatBubble").style.display = "none";
         }
 
         function closeChat() {
             document.getElementById("chatBox").style.display = "none";
+            document.getElementById("chatBubble").style.display = "flex";
         }
 
         function sendMessage() {
             const chatInput = document.getElementById("chatInput");
             const chatMessages = document.getElementById("chatMessages");
+            
             if (chatInput.value.trim() !== "") {
-                chatMessages.innerHTML += `<p><strong>You:</strong> ${chatInput.value}</p>`;
+                // Add user message
+                chatMessages.innerHTML += `
+                    <div class="message user-message">
+                        ${chatInput.value}
+                    </div>
+                `;
+                
+                const userQuestion = chatInput.value.trim();
                 chatInput.value = "";
+                
+                // Show typing indicator
+                chatMessages.innerHTML += `
+                    <div class="message doctor-message" id="typingIndicator">
+                        <em>Typing...</em>
+                    </div>
+                `;
                 chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Simulate doctor response after delay
+                setTimeout(() => {
+                    document.getElementById("typingIndicator").remove();
+                    
+                    // Add doctor response
+                    let response = "Thank you for your message. I'd be happy to discuss this further during your appointment.";
+                    
+                    if (userQuestion.toLowerCase().includes("appointment")) {
+                        response = "You can book an appointment by clicking the 'Book Now' button on my profile. I'm looking forward to meeting you!";
+                    } else if (userQuestion.toLowerCase().includes("cost")) {
+                        response = "Our consultation fees vary based on the type of visit. Initial consultations are typically $120-150. We accept most insurance plans.";
+                    } else if (userQuestion.toLowerCase().includes("prepare")) {
+                        response = "For your first appointment, please bring your medical history, any recent test results, and a list of current medications.";
+                    }
+                    
+                    chatMessages.innerHTML += `
+                        <div class="message doctor-message">
+                            <strong>${currentDoctor}</strong><br>
+                            ${response}
+                        </div>
+                    `;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1500);
             }
+        }
+
+        // Enter key to send message
+        document.getElementById("chatInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Search functionality
+        document.getElementById("searchInput").addEventListener("keyup", function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredDoctors = doctors.filter(doctor => 
+                doctor.name.toLowerCase().includes(searchTerm) || 
+                doctor.specialty.toLowerCase().includes(searchTerm)
+            );
+            
+            if (filteredDoctors.length > 0) {
+                loadDoctors(filteredDoctors);
+            } else {
+                document.getElementById("doctors-list").innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 50px; color: #666;">
+                        <i class="fas fa-search" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3>No doctors found matching "${this.value}"</h3>
+                        <p>Try another search term or clear your search</p>
+                    </div>
+                `;
+            }
+        });
+
+        // Filter chips functionality
+        document.querySelectorAll(".filter-chip").forEach(chip => {
+            chip.addEventListener("click", function() {
+                // Toggle active state
+                document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+                this.classList.add("active");
+                
+                const filterText = this.textContent.toLowerCase();
+                
+                // Apply filter
+                if (filterText === "all specialists") {
+                    loadDoctors(doctors);
+                } else if (filterText === "rating 4.8+") {
+                    const filteredDoctors = doctors.filter(doctor => doctor.rating >= 4.8);
+                    loadDoctors(filteredDoctors);
+                } else {
+                    const filteredDoctors = doctors.filter(doctor => 
+                        doctor.specialty.toLowerCase().includes(filterText)
+                    );
+                    loadDoctors(filteredDoctors);
+                }
+            });
+        });
+
+        // Support chat functionality
+        function toggleSupportChat() {
+            currentDoctor = "Customer Support";
+            document.getElementById("doctorChatName").textContent = "Customer Support";
+            document.getElementById("chatBox").style.display = "flex";
+            document.getElementById("chatMessages").innerHTML = `
+                <div class="message doctor-message">
+                    <strong>Customer Support</strong><br>
+                    Hello! How can we help you today? If you have questions about booking, doctors, or our services, I'm here to assist.
+                </div>
+            `;
+            document.getElementById("chatBubble").style.display = "none";
         }
     </script>
 </body>
