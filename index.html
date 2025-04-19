@@ -696,6 +696,41 @@
                 align-items: center;
             }
         }
+        :root {
+  --bg-color: #fff0f5;
+  --text-color: #333;
+  --card-bg: white;
+  --highlight-color: #ff4d94;
+  --nav-bg: #ffe0ec;
+}
+
+body.dark {
+  --bg-color: #1e1e1e;
+  --text-color: #f0f0f0;
+  --card-bg: #2e2e2e;
+  --highlight-color: #ff85c1;
+  --nav-bg: #333;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+header {
+  background-color: var(--highlight-color);
+  color: white;
+}
+
+.tab-nav {
+  background: var(--nav-bg);
+}
+
+.tracking-item, .summary-container {
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
     </style>
 </head>
 <body>
@@ -714,13 +749,12 @@
                 </button>
                 
                 <ul class="menu" id="menu">
-                    <li><a href="resources.html">Resources</a></li>
-                    <li><a href="doctorappointment.html">Book An Appointment</a></li>
-                    <li><a href="periodtracker.html">Period Tracker</a></li>
-                    <li><a href="journal.html">Journal</a></li>
-                    <li><a href="FAQ.html">FAQ</a></li>
-                    <li><a href="fitness.html">Fitness</a></li>
-
+                    <li><a href="navbar/resources.html">Resources</a></li>
+                    <li><a href="navbar/doctorappointment.html">Book An Appointment</a></li>
+                    <li><a href="navbar/periodtracker.html">Period Tracker</a></li>
+                    <li><a href="navbar/journal.html">Journal</a></li>
+                    <li><a href="navbar/FAQ.html">FAQ</a></li>
+                    <li><a href="navbar/fitness.html">Fitness</a></li>
 
                 </ul>
             </div>
@@ -728,6 +762,10 @@
             <div class="auth-btn">
                 <a href="login.html" class="btn btn-primary">Login/Register <i class="fas fa-arrow-right"></i></a>
             </div>
+            <button id="darkModeToggle" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer;">
+                🌙
+              </button>
+              
         </div>
     </nav>
 
@@ -896,10 +934,10 @@
                     icon.classList.add('fa-bars');
                 }
             });
-            
+    
             // Scroll animation
             const animateElements = document.querySelectorAll('.animate-fadeIn');
-            
+    
             function checkIfInView() {
                 animateElements.forEach(element => {
                     const elementTop = element.getBoundingClientRect().top;
@@ -912,21 +950,21 @@
                     }
                 });
             }
-            
+    
             // Initial check
             checkIfInView();
-            
+    
             // Check on scroll
             window.addEventListener('scroll', checkIfInView);
-            
+    
             // Stats counter animation
             const stats = document.querySelectorAll('.stat h3');
-            
+    
             function animateCounter(el, target) {
-                const duration = 2000; // 2 seconds
-                const step = target / (duration / 16); // 60fps
+                const duration = 2000;
+                const step = target / (duration / 16);
                 let current = 0;
-                
+    
                 const updateCounter = () => {
                     current += step;
                     if (current < target) {
@@ -936,11 +974,10 @@
                         el.textContent = target + '+';
                     }
                 };
-                
+    
                 updateCounter();
             }
-            
-            // Start animations when elements are in view
+    
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -950,11 +987,33 @@
                     }
                 });
             }, { threshold: 0.5 });
-            
+    
             stats.forEach(stat => {
                 observer.observe(stat);
             });
+    
+            // ✅ Dark Mode Toggle
+            const toggleBtn = document.getElementById('darkModeToggle');
+    
+            // Load saved theme
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark');
+                toggleBtn.textContent = '☀️';
+            }
+    
+            toggleBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                if (document.body.classList.contains('dark')) {
+                    toggleBtn.textContent = '☀️';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    toggleBtn.textContent = '🌙';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+    
         });
     </script>
+    
 </body>
 </html>
