@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Femina Fitness - Cycle-Based Workouts</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -28,18 +28,62 @@
     /* Header Styles */
     header {
       text-align: center;
-      padding: 40px 20px;
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(255, 77, 148, 0.1);
-      margin-bottom: 40px;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #fff 0%, #ffe6f0 100%);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 77, 148, 0.15);
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header-decoration {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(255, 77, 148, 0.05);
+      z-index: 0;
+    }
+    
+    .decoration-1 {
+      top: -80px;
+      left: -80px;
+      width: 250px;
+      height: 250px;
+    }
+    
+    .decoration-2 {
+      bottom: -60px;
+      right: -60px;
+      width: 180px;
+      height: 180px;
+    }
+    
+    .header-content {
+      position: relative;
+      z-index: 1;
     }
     
     .logo {
-      font-size: 2.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
       font-weight: 700;
       color: #ff4d94;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .logo:after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background-color: #ff4d94;
+      border-radius: 2px;
+      bottom: -8px;
+      left: 25%;
     }
     
     .logo span {
@@ -47,108 +91,258 @@
     }
     
     h1 {
-      font-size: 2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
       font-weight: 600;
-      margin: 20px 0 10px;
+      margin: 30px 0 20px;
       color: #333;
     }
     
     .subtitle {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       color: #666;
       max-width: 800px;
       margin: 0 auto;
+      line-height: 1.8;
     }
     
     /* Card Grid */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+      gap: 40px;
     }
     
     .card {
       background: #fff;
-      border-radius: 15px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 8px 20px rgba(255, 77, 148, 0.12);
-      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      box-shadow: 0 15px 35px rgba(255, 77, 148, 0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      z-index: 1;
       cursor: pointer;
     }
     
     .card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 15px 30px rgba(255, 77, 148, 0.2);
+      transform: translateY(-15px);
+      box-shadow: 0 20px 40px rgba(255, 77, 148, 0.25);
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 77, 148, 0.05) 0%, rgba(255, 255, 255, 0) 60%);
+      z-index: -1;
     }
     
     .card-header {
-      background-color: #ff4d94;
+      position: relative;
+      background: linear-gradient(135deg, #ff4d94 0%, #ff85b6 100%);
       color: white;
-      padding: 15px;
+      padding: 25px;
       text-align: center;
     }
     
+    .card-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,64L60,85.3C120,107,240,149,360,149.3C480,149,600,107,720,101.3C840,96,960,128,1080,144C1200,160,1320,160,1380,160L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+      background-position: center;
+    }
+    
     .card-header h2 {
-      font-size: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
       font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .phase-days {
+      display: inline-block;
+      padding: 5px 15px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      margin-top: 10px;
     }
     
     .card-body {
-      padding: 25px;
+      padding: 30px;
     }
     
-    .card-body h3 {
-      font-size: 1.25rem;
-      color: #ff4d94;
-      margin-bottom: 15px;
+    .energy-level {
+      margin-bottom: 25px;
     }
+    
+    .energy-level h3 {
+      font-size: 1.3rem;
+      color: #ff4d94;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .energy-level h3::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background-color: #ff4d94;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    
+    .energy-meter {
+      height: 8px;
+      background-color: #f0f0f0;
+      border-radius: 4px;
+      margin-top: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .energy-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #ff4d94 0%, #ff85b6 100%);
+    }
+    
+    .menstrual-energy .energy-fill { width: 25%; }
+    .follicular-energy .energy-fill { width: 65%; }
+    .ovulation-energy .energy-fill { width: 95%; }
+    .luteal-energy .energy-fill { width: 50%; }
     
     .workout-type {
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      transition: transform 0.3s ease;
+    }
+    
+    .card:hover .workout-type {
+      transform: translateX(5px);
     }
     
     .workout-icon {
-      width: 40px;
-      height: 40px;
-      background-color: rgba(255, 77, 148, 0.1);
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, rgba(255, 77, 148, 0.1) 0%, rgba(255, 77, 148, 0.2) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 15px;
+      margin-right: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .workout-icon::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, transparent 60%, rgba(255, 77, 148, 0.05) 100%);
     }
     
     .workout-icon svg {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       fill: #ff4d94;
     }
     
     .workout-name {
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #444;
+    }
+    
+    .card-description {
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 25px;
     }
     
     .card-tips {
-      background-color: rgba(255, 77, 148, 0.05);
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
+      background: linear-gradient(135deg, rgba(255, 77, 148, 0.05) 0%, rgba(255, 77, 148, 0.1) 100%);
+      padding: 20px;
+      border-radius: 15px;
+      position: relative;
     }
     
     .tip-title {
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       color: #ff4d94;
+      display: flex;
+      align-items: center;
+    }
+    
+    .tip-title::before {
+      content: '💡';
+      margin-right: 8px;
+    }
+    
+    .card-tips ul {
+      list-style-type: none;
+    }
+    
+    .card-tips li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+    }
+    
+    .card-tips li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #ff85b6;
     }
     
     /* Footer */
     footer {
       text-align: center;
-      margin-top: 60px;
+      margin-top: 80px;
+      padding: 40px 20px;
       color: #666;
-      padding: 20px;
+      position: relative;
+    }
+    
+    .footer-decoration {
+      margin: 0 auto 20px;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff4d94 0%, #ff85b6 100%);
+      border-radius: 2px;
+    }
+    
+    .footer-text {
+      font-size: 1.1rem;
+    }
+    
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .logo:hover {
+      animation: pulse 1.2s infinite;
     }
     
     /* Responsive adjustments */
@@ -158,11 +352,11 @@
       }
       
       header {
-        padding: 30px 15px;
+        padding: 40px 15px;
       }
       
       .logo {
-        font-size: 2rem;
+        font-size: 2.5rem;
       }
       
       h1 {
@@ -178,9 +372,13 @@
 <body>
   <div class="container">
     <header>
-      <div class="logo">Femina<span>Fitness</span></div>
-      <h1>Feel Good Workouts for Every Phase of Your Cycle</h1>
-      <p class="subtitle">Optimize your fitness journey by working with your body's natural rhythm. Discover the perfect workouts tailored to each phase of your menstrual cycle.</p>
+      <div class="header-decoration decoration-1"></div>
+      <div class="header-decoration decoration-2"></div>
+      <div class="header-content">
+        <div class="logo">Femina<span>Fitness</span></div>
+        <h1>Feel Good Workouts for Every Phase of Your Cycle</h1>
+        <p class="subtitle">Optimize your fitness journey by working with your body's natural rhythm. Discover the perfect workouts tailored to each phase of your menstrual cycle.</p>
+      </div>
     </header>
     
     <div class="card-grid">
@@ -188,10 +386,15 @@
       <div class="card">
         <div class="card-header">
           <h2>Menstrual Phase</h2>
-          <p>Days 1-5</p>
+          <div class="phase-days">Days 1-5</div>
         </div>
         <div class="card-body">
-          <h3>Energy Level: Lower</h3>
+          <div class="energy-level">
+            <h3>Energy Level: Lower</h3>
+            <div class="energy-meter menstrual-energy">
+              <div class="energy-fill"></div>
+            </div>
+          </div>
           <div class="workout-type">
             <div class="workout-icon">
               <svg viewBox="0 0 24 24">
@@ -200,9 +403,9 @@
             </div>
             <span class="workout-name">Gentle Yoga & Light Walking</span>
           </div>
-          <p>During your period, focus on gentle movement that soothes cramps and boosts your mood. Listen to your body and rest when needed.</p>
+          <p class="card-description">During your period, focus on gentle movement that soothes cramps and boosts your mood. Listen to your body and rest when needed.</p>
           <div class="card-tips">
-            <p class="tip-title">Pro Tips:</p>
+            <p class="tip-title">Pro Tips</p>
             <ul>
               <li>Child's pose and cat-cow stretches can help relieve cramps</li>
               <li>Aim for 15-30 minutes of gentle movement daily</li>
@@ -216,10 +419,15 @@
       <div class="card">
         <div class="card-header">
           <h2>Follicular Phase</h2>
-          <p>Days 6-13</p>
+          <div class="phase-days">Days 6-13</div>
         </div>
         <div class="card-body">
-          <h3>Energy Level: Rising</h3>
+          <div class="energy-level">
+            <h3>Energy Level: Rising</h3>
+            <div class="energy-meter follicular-energy">
+              <div class="energy-fill"></div>
+            </div>
+          </div>
           <div class="workout-type">
             <div class="workout-icon">
               <svg viewBox="0 0 24 24">
@@ -228,9 +436,9 @@
             </div>
             <span class="workout-name">Cardio & Strength Training</span>
           </div>
-          <p>As estrogen rises, your energy and strength increase. This is an excellent time to challenge yourself with more intense workouts.</p>
+          <p class="card-description">As estrogen rises, your energy and strength increase. This is an excellent time to challenge yourself with more intense workouts.</p>
           <div class="card-tips">
-            <p class="tip-title">Pro Tips:</p>
+            <p class="tip-title">Pro Tips</p>
             <ul>
               <li>Great time for HIIT, running or dance cardio</li>
               <li>Focus on building strength with moderate weights</li>
@@ -244,10 +452,15 @@
       <div class="card">
         <div class="card-header">
           <h2>Ovulation Phase</h2>
-          <p>Days 14-21</p>
+          <div class="phase-days">Days 14-21</div>
         </div>
         <div class="card-body">
-          <h3>Energy Level: Peak</h3>
+          <div class="energy-level">
+            <h3>Energy Level: Peak</h3>
+            <div class="energy-meter ovulation-energy">
+              <div class="energy-fill"></div>
+            </div>
+          </div>
           <div class="workout-type">
             <div class="workout-icon">
               <svg viewBox="0 0 24 24">
@@ -256,9 +469,9 @@
             </div>
             <span class="workout-name">High-Intensity & Group Activities</span>
           </div>
-          <p>During ovulation, you're at your physical peak. Take advantage of your maximum energy and endurance levels.</p>
+          <p class="card-description">During ovulation, you're at your physical peak. Take advantage of your maximum energy and endurance levels.</p>
           <div class="card-tips">
-            <p class="tip-title">Pro Tips:</p>
+            <p class="tip-title">Pro Tips</p>
             <ul>
               <li>Ideal time for personal records and challenges</li>
               <li>Try team sports or group fitness classes</li>
@@ -272,10 +485,15 @@
       <div class="card">
         <div class="card-header">
           <h2>Luteal Phase</h2>
-          <p>Days 22-28</p>
+          <div class="phase-days">Days 22-28</div>
         </div>
         <div class="card-body">
-          <h3>Energy Level: Decreasing</h3>
+          <div class="energy-level">
+            <h3>Energy Level: Decreasing</h3>
+            <div class="energy-meter luteal-energy">
+              <div class="energy-fill"></div>
+            </div>
+          </div>
           <div class="workout-type">
             <div class="workout-icon">
               <svg viewBox="0 0 24 24">
@@ -284,9 +502,9 @@
             </div>
             <span class="workout-name">Strength Training & Pilates</span>
           </div>
-          <p>As progesterone rises, your body temperature increases and energy starts to decline. Moderate your intensity and focus on controlled movements.</p>
+          <p class="card-description">As progesterone rises, your body temperature increases and energy starts to decline. Moderate your intensity and focus on controlled movements.</p>
           <div class="card-tips">
-            <p class="tip-title">Pro Tips:</p>
+            <p class="tip-title">Pro Tips</p>
             <ul>
               <li>Strength training can help manage PMS symptoms</li>
               <li>Focus on form and controlled movements</li>
@@ -298,7 +516,8 @@
     </div>
     
     <footer>
-      <p>© 2025 FeminaFitness. Listen to your body and adjust workouts as needed.</p>
+      <div class="footer-decoration"></div>
+      <p class="footer-text">© 2025 FeminaFitness. Listen to your body and adjust workouts as needed.</p>
     </footer>
   </div>
 </body>
