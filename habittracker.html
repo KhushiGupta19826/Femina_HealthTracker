@@ -179,34 +179,34 @@
     // Tabs
     const tabs = document.querySelectorAll('.nav-tab');
     const sections = document.querySelectorAll('.tracker-section');
-
+  
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         sections.forEach(s => s.classList.remove('active'));
-
+  
         tab.classList.add('active');
         document.getElementById(`${tab.dataset.tab}-section`).classList.add('active');
-
+  
         if (tab.dataset.tab === 'summary') {
           displaySummary();
         }
       });
     });
-
+  
     // Slider values
     const headacheSlider = document.getElementById('headache-slider');
     const bloatingSlider = document.getElementById('bloating-slider');
     const headacheValue = document.getElementById('headache-value');
     const bloatingValue = document.getElementById('bloating-value');
-
+  
     headacheSlider.addEventListener('input', () => {
       headacheValue.textContent = headacheSlider.value;
     });
     bloatingSlider.addEventListener('input', () => {
       bloatingValue.textContent = bloatingSlider.value;
     });
-
+  
     // Save data
     document.getElementById('save-btn').addEventListener('click', () => {
       const date = document.getElementById('selected-date').value;
@@ -214,35 +214,55 @@
         alert("Please select a date!");
         return;
       }
-
+  
       const data = {
-        headache: headacheSlider.value,
-        bloating: bloatingSlider.value,
-        waterIntake: document.getElementById('water-intake').value,
-        exercise: document.getElementById('exercise').value,
-        meals: document.getElementById('meals').value
+        headache: parseInt(headacheSlider.value),
+        bloating: parseInt(bloatingSlider.value),
+        waterIntake: parseInt(document.getElementById('water-intake').value),
+        exercise: parseInt(document.getElementById('exercise').value),
+        meals: parseInt(document.getElementById('meals').value)
       };
-
+  
       localStorage.setItem(`fitness-${date}`, JSON.stringify(data));
       alert("Data saved successfully!");
     });
-
-    // Show summary
+  
+    // Show summary with suggestions
     function displaySummary() {
       const date = document.getElementById('selected-date').value;
       const summaryContainer = document.querySelector('.summary-container');
       const summaryContent = document.querySelector('.summary-content');
       summaryContainer.style.display = 'block';
-
+  
       if (!date) {
         summaryContent.innerHTML = "<p>Please select a date to view summary.</p>";
         return;
       }
-
+  
       const savedData = JSON.parse(localStorage.getItem(`fitness-${date}`));
       if (!savedData) {
         summaryContent.innerHTML = `<p>No data found for <strong>${date}</strong>.</p>`;
       } else {
+        let suggestions = [];
+  
+        if (savedData.headache >= 6)
+          suggestions.push("Consider taking rest and staying hydrated. Avoid screen time if possible.");
+  
+        if (savedData.bloating >= 6)
+          suggestions.push("Try light exercises like walking or yoga. Stay away from salty foods.");
+  
+        if (savedData.waterIntake < 6)
+          suggestions.push("Your water intake is low. Aim for at least 8 glasses a day.");
+  
+        if (savedData.exercise < 15)
+          suggestions.push("Consider incorporating at least 15 minutes of light exercise.");
+  
+        if (savedData.meals < 2)
+          suggestions.push("Try not to skip meals. Balanced nutrition is important for energy.");
+  
+        if (suggestions.length === 0)
+          suggestions.push("Great job! You're maintaining a healthy balance. Keep it up! 💪");
+  
         summaryContent.innerHTML = `
           <div class="summary-date">${date}</div>
           <div class="summary-item"><span class="summary-label">Headache:</span> ${savedData.headache}/10</div>
@@ -250,9 +270,15 @@
           <div class="summary-item"><span class="summary-label">Water Intake:</span> ${savedData.waterIntake} glasses</div>
           <div class="summary-item"><span class="summary-label">Exercise:</span> ${savedData.exercise} mins</div>
           <div class="summary-item"><span class="summary-label">Healthy Meals:</span> ${savedData.meals}</div>
+          <hr style="margin: 15px 0;">
+          <h4 style="color:#ff4d94;">Suggestions for You</h4>
+          <ul style="padding-left: 20px; line-height: 1.6;">
+            ${suggestions.map(s => `<li>${s}</li>`).join('')}
+          </ul>
         `;
       }
     }
   </script>
+  
 </body>
 </html>
