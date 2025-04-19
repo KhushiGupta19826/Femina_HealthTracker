@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Femina Fitness - Symptom & Habit Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      margin: 0;
+      background-color: #fff0f5;
+      color: #333;
+    }
+    header {
+      background-color: #ff4d94;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      background: #ffe0ec;
+      padding: 10px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .nav-tab {
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-tab.active, .nav-tab:hover {
+      background-color: #ff4d94;
+      color: white;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+    .tracker-section {
+      display: none;
+    }
+    .tracker-section.active {
+      display: block;
+    }
+    .tracking-item {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(255, 77, 148, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .item-title {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    .slider-value {
+      font-weight: bold;
+      color: #ff4d94;
+    }
+    input[type=range] {
+      width: 100%;
+    }
+    input[type="date"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+    .btn {
+      background: #ff4d94;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-weight: 500;
+    }
+    .summary-container {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(255, 77, 148, 0.1);
+      display: none;
+    }
+    .summary-date {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .summary-item {
+      margin-bottom: 8px;
+    }
+    .summary-label {
+      font-weight: 500;
+      color: #ff4d94;
+    }
+
+    @media screen and (max-width: 600px) {
+      .tab-nav {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>Femina Fitness - Symptom & Habit Tracker</header>
+
+  <div class="tab-nav">
+    <div class="nav-tab active" data-tab="symptoms">Symptoms</div>
+    <div class="nav-tab" data-tab="habits">Habits</div>
+    <div class="nav-tab" data-tab="summary">Summary</div>
+  </div>
+
+  <div class="container">
+    <div class="tracking-item">
+      <label class="item-title">Select Date</label>
+      <input type="date" id="selected-date">
+    </div>
+
+    <!-- SYMPTOMS SECTION -->
+    <div id="symptoms-section" class="tracker-section active">
+      <div class="tracking-item">
+        <h3 class="item-title">Headache</h3>
+        <input type="range" min="0" max="10" value="0" id="headache-slider">
+        <div>Severity: <span class="slider-value" id="headache-value">0</span>/10</div>
+      </div>
+
+      <div class="tracking-item">
+        <h3 class="item-title">Bloating</h3>
+        <input type="range" min="0" max="10" value="0" id="bloating-slider">
+        <div>Severity: <span class="slider-value" id="bloating-value">0</span>/10</div>
+      </div>
+    </div>
+
+    <!-- HABITS SECTION -->
+    <div id="habits-section" class="tracker-section">
+      <div class="tracking-item">
+        <h3 class="item-title">Water Intake (Glasses)</h3>
+        <input type="number" id="water-intake" min="0" placeholder="e.g., 8">
+      </div>
+
+      <div class="tracking-item">
+        <h3 class="item-title">Exercise (Minutes)</h3>
+        <input type="number" id="exercise" min="0" placeholder="e.g., 30">
+      </div>
+
+      <div class="tracking-item">
+        <h3 class="item-title">Healthy Meals Today</h3>
+        <input type="number" id="meals" min="0" max="5" placeholder="e.g., 3">
+      </div>
+    </div>
+
+    <!-- SUMMARY SECTION -->
+    <div id="summary-section" class="tracker-section">
+      <div class="summary-container">
+        <h3>Daily Summary</h3>
+        <div class="summary-content"></div>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button class="btn" id="save-btn">Save Today's Data</button>
+    </div>
+  </div>
+
+  <script>
+    // Tabs
+    const tabs = document.querySelectorAll('.nav-tab');
+    const sections = document.querySelectorAll('.tracker-section');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+
+        tab.classList.add('active');
+        document.getElementById(`${tab.dataset.tab}-section`).classList.add('active');
+
+        if (tab.dataset.tab === 'summary') {
+          displaySummary();
+        }
+      });
+    });
+
+    // Slider values
+    const headacheSlider = document.getElementById('headache-slider');
+    const bloatingSlider = document.getElementById('bloating-slider');
+    const headacheValue = document.getElementById('headache-value');
+    const bloatingValue = document.getElementById('bloating-value');
+
+    headacheSlider.addEventListener('input', () => {
+      headacheValue.textContent = headacheSlider.value;
+    });
+    bloatingSlider.addEventListener('input', () => {
+      bloatingValue.textContent = bloatingSlider.value;
+    });
+
+    // Save data
+    document.getElementById('save-btn').addEventListener('click', () => {
+      const date = document.getElementById('selected-date').value;
+      if (!date) {
+        alert("Please select a date!");
+        return;
+      }
+
+      const data = {
+        headache: headacheSlider.value,
+        bloating: bloatingSlider.value,
+        waterIntake: document.getElementById('water-intake').value,
+        exercise: document.getElementById('exercise').value,
+        meals: document.getElementById('meals').value
+      };
+
+      localStorage.setItem(`fitness-${date}`, JSON.stringify(data));
+      alert("Data saved successfully!");
+    });
+
+    // Show summary
+    function displaySummary() {
+      const date = document.getElementById('selected-date').value;
+      const summaryContainer = document.querySelector('.summary-container');
+      const summaryContent = document.querySelector('.summary-content');
+      summaryContainer.style.display = 'block';
+
+      if (!date) {
+        summaryContent.innerHTML = "<p>Please select a date to view summary.</p>";
+        return;
+      }
+
+      const savedData = JSON.parse(localStorage.getItem(`fitness-${date}`));
+      if (!savedData) {
+        summaryContent.innerHTML = `<p>No data found for <strong>${date}</strong>.</p>`;
+      } else {
+        summaryContent.innerHTML = `
+          <div class="summary-date">${date}</div>
+          <div class="summary-item"><span class="summary-label">Headache:</span> ${savedData.headache}/10</div>
+          <div class="summary-item"><span class="summary-label">Bloating:</span> ${savedData.bloating}/10</div>
+          <div class="summary-item"><span class="summary-label">Water Intake:</span> ${savedData.waterIntake} glasses</div>
+          <div class="summary-item"><span class="summary-label">Exercise:</span> ${savedData.exercise} mins</div>
+          <div class="summary-item"><span class="summary-label">Healthy Meals:</span> ${savedData.meals}</div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
