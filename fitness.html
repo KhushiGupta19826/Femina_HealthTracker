@@ -106,11 +106,23 @@
       line-height: 1.8;
     }
     
-    /* Card Grid */
+    /* Card Grid - Modified for centered luteal phase */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 40px;
+    }
+    
+    /* First row - 3 cards */
+    .card-grid .card:nth-child(1),
+    .card-grid .card:nth-child(2),
+    .card-grid .card:nth-child(3) {
+      grid-column: auto;
+    }
+    
+    /* Second row - 1 card centered */
+    .card-grid .card:nth-child(4) {
+      grid-column: 2;
     }
     
     .card {
@@ -351,6 +363,10 @@
         grid-template-columns: 1fr;
       }
       
+      .card-grid .card:nth-child(4) {
+        grid-column: 1;
+      }
+      
       header {
         padding: 40px 15px;
       }
@@ -481,7 +497,7 @@
         </div>
       </div>
       
-      <!-- Luteal Phase Card -->
+      <!-- Luteal Phase Card - Now centered on its own row -->
       <div class="card">
         <div class="card-header">
           <h2>Luteal Phase</h2>
