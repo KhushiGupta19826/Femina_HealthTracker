@@ -1,35 +1,71 @@
-// js/auth.js
-const loginForm = document.getElementById("loginForm");
-const signupForm = document.getElementById("signupForm");
+// auth.js
 
-let users = JSON.parse(localStorage.getItem("users")) || [];
-
-if (signupForm) {
-  signupForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const email = signupForm.email.value;
-    const password = signupForm.password.value;
-
-    const existingUser = users.find(user => user.email === email);
-    if (existingUser) return alert("User already exists!");
-
-    users.push({ email, password, journal: [], periodData: [] });
+// ------------------- SIGN UP ------------------- //
+function signupUser(event) {
+    event.preventDefault();
+  
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value.trim();
+  
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
+  
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+  
+    const userExists = users.some(user => user.email === email);
+    if (userExists) {
+      alert("User already exists. Please login.");
+      window.location.href = "login.html";
+      return;
+    }
+  
+    const newUser = {
+      email: email,
+      password: password,
+      journal: [],
+      periodLogs: []
+    };
+  
+    users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
-    alert("Signup successful. Please log in.");
-    signupForm.reset();
-  });
-}
-
-if (loginForm) {
-  loginForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const email = loginForm.email.value;
-    const password = loginForm.password.value;
-
-    const user = users.find(u => u.email === email && u.password === password);
-    if (!user) return alert("Invalid login!");
-
-    localStorage.setItem("loggedInUser", email);
-    window.location.href = "periodtracker.html"; // after login
-  });
-}
+    localStorage.setItem("currentUser", email);
+  
+    alert("Signup successful! Redirecting to home.");
+    window.location.href = "index.html";
+  }
+  
+  // ------------------- LOGIN ------------------- //
+  function loginUser(event) {
+    event.preventDefault();
+  
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
+  
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
+  
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+  
+    const validUser = users.find(user => user.email === email && user.password === password);
+  
+    if (!validUser) {
+      alert("Invalid email or password.");
+      return;
+    }
+  
+    localStorage.setItem("currentUser", email);
+    alert("Login successful! Redirecting to home.");
+    window.location.href = "index.html";
+  }
+  
+  // ------------------- LOGOUT ------------------- //
+  function logoutUser() {
+    localStorage.removeItem("currentUser");
+    alert("You have been logged out.");
+    window.location.href = "login.html";
+  }
+  
