@@ -4,109 +4,499 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book an Appointment</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Roboto', Arial, sans-serif;
+            font-family: 'Nunito', 'Roboto', 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
-            text-align: center;
-            padding: 50px 20px;
             min-height: 100vh;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 40px 20px;
+            color: #333;
+            line-height: 1.6;
         }
+        
+        /* Container & Card Styling */
         .container {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(255, 64, 129, 0.2);
-            max-width: 500px;
             width: 100%;
+            max-width: 550px;
+            position: relative;
+        }
+        
+        .header-image {
+            height: 180px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('/api/placeholder/550/180');
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            align-items: flex-end;
             position: relative;
             overflow: hidden;
         }
-        .container::before {
+        
+        .header-content {
+            padding: 20px;
+            color: white;
+            width: 100%;
+            text-align: left;
+            z-index: 2;
+        }
+        
+        .header-content h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        }
+        
+        .header-content p {
+            font-size: 16px;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            position: relative;
+        }
+        
+        .appointment-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .appointment-steps::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(to right, #ff4081, #f50057);
+            top: 15px;
+            left: 40px;
+            right: 40px;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 1;
         }
-        h2 {
-            color: #ff4081;
-            margin-bottom: 30px;
-            font-size: 28px;
+        
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ff4081;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .step.completed {
+            background: #4caf50;
+        }
+        
+        .step.current {
+            transform: scale(1.2);
+            box-shadow: 0 3px 10px rgba(255, 64, 129, 0.4);
+        }
+        
+        .step-label {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #666;
+            white-space: nowrap;
             font-weight: 600;
         }
+        
+        /* Form Styles */
+        h2 {
+            color: #d81b60;
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
         form {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 16px;
+            gap: 20px;
         }
+        
         .input-group {
             width: 100%;
             text-align: left;
+            position: relative;
         }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 41px;
+            color: #bdbdbd;
+            transition: all 0.3s;
+        }
+        
         label {
             display: block;
             margin-bottom: 6px;
             color: #616161;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
+            transition: all 0.3s;
         }
-        input, select {
+        
+        .input-field {
             width: 100%;
-            padding: 12px 16px;
+            padding: 14px 16px 14px 45px;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             transition: all 0.3s ease;
-            box-sizing: border-box;
+            font-family: inherit;
         }
-        input:focus, select:focus {
+        
+        .input-field:focus {
             border-color: #ff4081;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.2);
+            box-shadow: 0 3px 8px rgba(255, 64, 129, 0.15);
         }
-        input::placeholder {
+        
+        .input-field:focus + .input-icon {
+            color: #ff4081;
+        }
+        
+        .input-field::placeholder {
             color: #bdbdbd;
+            opacity: 1;
         }
-        button {
+        
+        /* Date and Time Row */
+        .row {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .col {
+            flex: 1;
+        }
+        
+        /* Multi-select Time Slots */
+        .time-slots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .time-slot {
+            flex: 1;
+            min-width: calc(33.33% - 7px);
+            padding: 10px 5px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: #616161;
+        }
+        
+        .time-slot:hover {
+            border-color: #ff4081;
+            background: rgba(255, 64, 129, 0.05);
+        }
+        
+        .time-slot.selected {
+            border-color: #ff4081;
+            background: rgba(255, 64, 129, 0.1);
+            color: #ff4081;
+            font-weight: 600;
+        }
+        
+        /* Note Section */
+        .note-section {
+            background: #f9f2f7;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 5px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .note-icon {
+            color: #ff4081;
+            margin-top: 2px;
+        }
+        
+        .note-text {
+            font-size: 13px;
+            color: #757575;
+            text-align: left;
+            line-height: 1.4;
+        }
+        
+        /* Submit Button */
+        .submit-btn {
             background: linear-gradient(to right, #ff4081, #f50057);
             color: white;
-            padding: 14px;
+            padding: 16px;
             border: none;
-            border-radius: 8px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-weight: 700;
             font-size: 16px;
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(255, 64, 129, 0.2);
+            box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255, 64, 129, 0.3);
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 64, 129, 0.4);
         }
-        button:active {
-            transform: translateY(0);
+        
+        .submit-btn:active {
+            transform: translateY(-1px);
         }
+        
+        /* Form Footer */
         .form-footer {
             margin-top: 20px;
             font-size: 14px;
             color: #757575;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
+        
+        .security-icon {
+            color: #43a047;
+        }
+        
+        /* Input Animations */
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            25% {transform: translateX(-5px);}
+            75% {transform: translateX(5px);}
+        }
+        
+        .input-field.error {
+            border-color: #f44336;
+            animation: shake 0.5s;
+        }
+        
+        .error-message {
+            color: #f44336;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        /* Labels animation */
+        .input-group:focus-within label {
+            color: #ff4081;
+        }
+        
+        /* Success overlay */
+        .success-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            z-index: 100;
+        }
+        
+        .success-content {
+            text-align: center;
+            padding: 20px;
+            transform: translateY(20px);
+            transition: all 0.5s ease 0.2s;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 40px;
+        }
+        
+        .success-title {
+            color: #4caf50;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .success-message {
+            color: #616161;
+            margin-bottom: 25px;
+        }
+        
+        .success-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .success-btn:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+        }
+        
+        .show-success {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .show-success .success-content {
+            transform: translateY(0);
+        }
+        
+        /* Loading animation */
+        .loading-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 8px;
+            display: none;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Doctor info */
+        .doctor-info {
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-left: 4px solid #ff4081;
+        }
+        
+        .doctor-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #eeeeee;
+            overflow: hidden;
+            margin-right: 15px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+        
+        .doctor-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .doctor-details {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .doctor-name {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        
+        .doctor-specialty {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        /* Responsive styles */
         @media (max-width: 600px) {
-            .container {
+            .form-card {
                 padding: 20px;
             }
+            
             h2 {
+                font-size: 20px;
+            }
+            
+            .row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .time-slot {
+                min-width: calc(50% - 5px);
+            }
+            
+            .header-image {
+                height: 150px;
+            }
+            
+            .header-content h1 {
                 font-size: 24px;
+            }
+            
+            .step-label {
+                font-size: 10px;
+            }
+            
+            .doctor-avatar {
+                width: 40px;
+                height: 40px;
             }
         }
     </style>
@@ -114,46 +504,217 @@
 <body>
 
 <div class="container">
-    <h2>Book an Appointment</h2>
-    <form id="appointment-form">
-        <div class="input-group">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+    <!-- Header Image -->
+    <div class="header-image">
+        <div class="header-content">
+            <h1>Book Your Appointment</h1>
+            <p>Fill in your details to get started</p>
+        </div>
+    </div>
+    
+    <div class="form-card">
+        <!-- Progress Steps -->
+        <div class="appointment-steps">
+            <div class="step completed">
+                <i class="fas fa-check fa-sm"></i>
+                <div class="step-label">Select Doctor</div>
+            </div>
+            <div class="step current">2
+                <div class="step-label">Your Details</div>
+            </div>
+            <div class="step">3
+                <div class="step-label">Confirmation</div>
+            </div>
         </div>
         
-        <div class="input-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <!-- Doctor Info -->
+        <div class="doctor-info">
+            <div class="doctor-avatar">
+                <img src="/api/placeholder/50/50" alt="Doctor">
+            </div>
+            <div class="doctor-details">
+                <div class="doctor-name">Dr. Aisha Khan</div>
+                <div class="doctor-specialty">Gynecologist & Obstetrician</div>
+            </div>
         </div>
         
-        <div class="input-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-        </div>
+        <h2>Please fill in your details</h2>
         
-        <div class="input-group">
-            <label for="time">Preferred Timing</label>
-            <select id="time" name="time" required>
-                <option value="" disabled selected>Select a time slot</option>
-                <option value="Morning">Morning (9 AM - 12 PM)</option>
-                <option value="Afternoon">Afternoon (1 PM - 4 PM)</option>
-                <option value="Evening">Evening (5 PM - 8 PM)</option>
-            </select>
-        </div>
-
-        <button type="submit">Confirm Appointment</button>
+        <form id="appointment-form">
+            <div class="input-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required class="input-field">
+                <i class="fas fa-user input-icon"></i>
+                <div class="error-message">Please enter your name</div>
+            </div>
+            
+            <div class="row">
+                <div class="col input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required class="input-field">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <div class="error-message">Please enter a valid email</div>
+                </div>
+                
+                <div class="col input-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required class="input-field">
+                    <i class="fas fa-phone input-icon"></i>
+                    <div class="error-message">Please enter your phone number</div>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="date">Preferred Date</label>
+                <input type="date" id="date" name="date" required class="input-field">
+                <i class="fas fa-calendar input-icon"></i>
+            </div>
+            
+            <div class="input-group">
+                <label>Preferred Time</label>
+                <div class="time-slots">
+                    <div class="time-slot" data-time="9:00 AM">9:00 AM</div>
+                    <div class="time-slot" data-time="10:00 AM">10:00 AM</div>
+                    <div class="time-slot" data-time="11:00 AM">11:00 AM</div>
+                    <div class="time-slot" data-time="1:00 PM">1:00 PM</div>
+                    <div class="time-slot" data-time="2:30 PM">2:30 PM</div>
+                    <div class="time-slot" data-time="4:00 PM">4:00 PM</div>
+                </div>
+                <input type="hidden" id="selected-time" name="selected-time" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="reason">Reason for Visit (Optional)</label>
+                <input type="text" id="reason" name="reason" placeholder="Briefly describe your concern" class="input-field">
+                <i class="fas fa-clipboard-list input-icon"></i>
+            </div>
+            
+            <div class="note-section">
+                <div class="note-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="note-text">
+                    Your appointment will be confirmed via email and SMS. Please arrive 15 minutes before your scheduled time.
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submit-button">
+                <i class="fas fa-calendar-check"></i>
+                Confirm Appointment
+                <div class="loading-indicator" id="loading-indicator"></div>
+            </button>
+            
+            <div class="form-footer">
+                <i class="fas fa-shield-alt security-icon"></i>
+                Your information is secure and will never be shared
+            </div>
+        </form>
         
-        <div class="form-footer">
-            We'll confirm your appointment via email shortly
+        <!-- Success Overlay -->
+        <div class="success-overlay" id="success-overlay">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h3 class="success-title">Appointment Confirmed!</h3>
+                <p class="success-message">We've sent the details to your email and phone.<br>Looking forward to seeing you!</p>
+                <button class="success-btn" onclick="window.location.href='index.html'">Back to Home</button>
+            </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <script>
-    document.getElementById("appointment-form").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent actual form submission
-        window.location.href = "thank-you.html"; // Redirect to Thank You page
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').setAttribute('min', today);
+    
+    // Time slot selection
+    const timeSlots = document.querySelectorAll('.time-slot');
+    timeSlots.forEach(slot => {
+        slot.addEventListener('click', function() {
+            // Remove selected class from all slots
+            timeSlots.forEach(s => s.classList.remove('selected'));
+            
+            // Add selected class to clicked slot
+            this.classList.add('selected');
+            
+            // Update hidden input with selected time
+            document.getElementById('selected-time').value = this.dataset.time;
+        });
     });
+    
+    // Form validation and submission
+    document.getElementById('appointment-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Basic validation
+        let isValid = true;
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const selectedTime = document.getElementById('selected-time');
+        
+        // Check name
+        if (name.value.trim() === '') {
+            name.classList.add('error');
+            name.nextElementSibling.nextElementSibling.style.display = 'block';
+            isValid = false;
+        } else {
+            name.classList.remove('error');
+            name.nextElementSibling.nextElementSibling.style.display = 'none';
+        }
+        
+        // Check email
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email.value)) {
+            email.classList.add('error');
+            email.nextElementSibling.nextElementSibling.style.display = 'block';
+            isValid = false;
+        } else {
+            email.classList.remove('error');
+            email.nextElementSibling.nextElementSibling.style.display = 'none';
+        }
+        
+        // Check phone
+        if (phone.value.trim() === '') {
+            phone.classList.add('error');
+            phone.nextElementSibling.nextElementSibling.style.display = 'block';
+            isValid = false;
+        } else {
+            phone.classList.remove('error');
+            phone.nextElementSibling.nextElementSibling.style.display = 'none';
+        }
+        
+        // Check if time is selected
+        if (selectedTime.value === '') {
+            document.querySelector('.time-slots').style.borderColor = '#f44336';
+            isValid = false;
+        } else {
+            document.querySelector('.time-slots').style.borderColor = 'initial';
+        }
+        
+        if (isValid) {
+            // Show loading indicator
+            const submitBtn = document.getElementById('submit-button');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            
+            submitBtn.disabled = true;
+            loadingIndicator.style.display = 'inline-block';
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                loadingIndicator.style.display = 'none';
+                
+                // Show success message
+                document.getElementById('success-overlay').classList.add('show-success');
+            }, 1500);
+        }
+    });
+    
+    // Initialize with today's date
+    const dateInput = document.getElementById('date');
+    dateInput.valueAsDate = new Date();
 </script>
 
 </body>
