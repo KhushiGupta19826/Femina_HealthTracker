@@ -527,14 +527,14 @@
             </div>
         </div>
         
-        <!-- Doctor Info -->
-        <div class="doctor-info">
+        <!-- Doctor Info - This will be dynamically updated -->
+        <div class="doctor-info" id="doctor-info-container">
             <div class="doctor-avatar">
-                <img src="assets/doctor-aisha-khan.jpg" alt="Doctor">
+                <img src="/api/placeholder/50/50" alt="Doctor" id="doctor-avatar">
             </div>
             <div class="doctor-details">
-                <div class="doctor-name">Dr. Aisha Khan</div>
-                <div class="doctor-specialty">Gynecologist & Obstetrician</div>
+                <div class="doctor-name" id="doctor-name">Loading...</div>
+                <div class="doctor-specialty" id="doctor-specialty">Loading...</div>
             </div>
         </div>
         
@@ -626,6 +626,83 @@
 </div>
 
 <script>
+    // Doctor data (simplified version of the data from the first page)
+    const doctors = [
+        { 
+            id: 1, 
+            name: "Dr. Aisha Khan", 
+            specialty: "Gynecologist & Obstetrician", 
+            photo: "assets/doctor-aisha-khan.jpg"
+        },
+        { 
+            id: 2, 
+            name: "Dr. Priya Sharma", 
+            specialty: "Reproductive Health Specialist", 
+            photo: "assets/doctor-priya-sharma.jpg"
+        },
+        { 
+            id: 3, 
+            name: "Dr. Emily Watson", 
+            specialty: "Hormonal Health Expert", 
+            photo: "assets/doctor-emily-watson.jpg"
+        },
+        { 
+            id: 4, 
+            name: "Dr. Rina Kapoor", 
+            specialty: "Fertility Consultant", 
+            photo: "assets/doctor-rina-kapoor.jpg"
+        },
+        { 
+            id: 5, 
+            name: "Dr. Sophia Lee", 
+            specialty: "Menstrual Health Specialist", 
+            photo: "assets/doctor-sophia-lee.jpg"
+        },
+        { 
+            id: 6, 
+            name: "Dr. Sara Patel", 
+            specialty: "PCOS & Endometriosis Specialist", 
+            photo: "assets/doctor-sara-patel.jpg"
+        },
+        { 
+            id: 7, 
+            name: "Dr. Hannah Brown", 
+            specialty: "Prenatal & Postnatal Care", 
+            photo: "assets/doctor-hannah-brown.jpg"
+        }
+    ];
+
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        const results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    // Get doctor name from URL
+    const doctorNameFromUrl = getUrlParameter('doctor');
+    
+    // Find doctor in our array
+    let selectedDoctor = doctors.find(doctor => doctor.name === doctorNameFromUrl);
+    
+    // If doctor not found, default to first doctor
+    if (!selectedDoctor && doctors.length > 0) {
+        selectedDoctor = doctors[0];
+    }
+
+    // Update doctor info in the form
+    if (selectedDoctor) {
+        document.getElementById('doctor-name').textContent = selectedDoctor.name;
+        document.getElementById('doctor-specialty').textContent = selectedDoctor.specialty;
+        // Set doctor image with fallback
+        const doctorAvatar = document.getElementById('doctor-avatar');
+        doctorAvatar.src = selectedDoctor.photo;
+        doctorAvatar.onerror = function() {
+            this.src = '/api/placeholder/50/50';
+        };
+    }
+
     // Set minimum date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').setAttribute('min', today);
