@@ -246,6 +246,62 @@
       font-weight: 500;
     }
     
+    .forgot-password {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    
+    .forgot-password a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .forgot-password a:hover {
+      color: var(--primary-dark);
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+    
+    .close-modal {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--light-text);
+    }
+    
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
@@ -308,6 +364,9 @@
               <div class="input-group">
                 <input type="password" name="password" placeholder="Password" required />
               </div>
+              <div class="forgot-password">
+                <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+              </div>
               <button type="submit">Login</button>
             </form>
             <div class="bottom-text">
@@ -331,6 +390,20 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  
+  <!-- Forgot Password Modal -->
+  <div id="forgotPasswordModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h3 class="modal-title">Reset Password</h3>
+      <form id="resetPasswordForm">
+        <div class="input-group">
+          <input type="email" name="resetEmail" placeholder="Enter your email" required />
+        </div>
+        <button type="submit">Send Reset Link</button>
+      </form>
     </div>
   </div>
 
@@ -367,9 +440,51 @@
       e.preventDefault();
       showLogin();
     });
+    
+    // Forgot Password Modal Functions
+    const modal = document.getElementById("forgotPasswordModal");
+    const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+    const closeModal = document.querySelector(".close-modal");
+    const resetPasswordForm = document.getElementById("resetPasswordForm");
+    
+    forgotPasswordLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = "flex";
+    });
+    
+    closeModal.addEventListener('click', () => {
+      modal.style.display = "none";
+    });
+    
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+    
+    resetPasswordForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = resetPasswordForm.resetEmail.value;
+      
+      // Check if the user exists
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const user = users.find(u => u.email === email);
+      
+      if (!user) {
+        alert("Email not found. Please check your email or sign up for a new account.");
+        return;
+      }
+      
+      // In a real application, you would send a reset password email
+      // For this demo, we'll just alert the user
+      alert("Password reset link has been sent to your email. Please check your inbox.");
+      
+      modal.style.display = "none";
+      resetPasswordForm.reset();
+    });
   </script>
 
-  <!-- Keep the original auth.js intact -->
+  <!-- Auth.js script -->
   <script>
     // js/auth.js
     const loginForm = document.getElementById("loginForm");
