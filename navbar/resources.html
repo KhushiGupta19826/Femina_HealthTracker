@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Femina Resources</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-image: linear-gradient(to bottom right, #fdf2f8, #fce7f3, #fbcfe8);
+    }
+    .category-filter:hover, #bookmark-toggle:hover {
+      background-color: #fecdd3;
+      transform: translateY(-1px);
+      transition: all 0.2s ease;
+    }
+    .active {
+      background-color: #ff4d94 !important;
+      color: white !important;
+    }
+    .resource-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-left: 4px solid #ff4d94;
+    }
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    .toggle-details:hover, .bookmark-btn:hover {
+      opacity: 0.8;
+    }
+    .category-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 0.7rem;
+    }
+  </style>
+</head>
+<body class="font-sans min-h-screen">
+  <div class="max-w-6xl mx-auto p-6">
+    <header class="text-center mb-8 pb-4 border-b border-pink-200">
+      <h1 class="text-4xl font-bold text-pink-600 mb-2">Femina Resources</h1>
+      <p class="text-pink-500">Your comprehensive guide to women's health and wellness</p>
+    </header>
+
+    <!-- Search & Filter -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+      <div class="relative w-full sm:w-1/2">
+        <input type="text" id="search-bar" placeholder="Search resources..." class="pl-10 pr-4 py-2 w-full border border-pink-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400 shadow-sm" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <button class="category-filter px-3 py-1 rounded-full border border-pink-400 text-pink-600 hover:shadow-md" data-category="Menstrual Health">Menstrual Health</button>
+        <button class="category-filter px-3 py-1 rounded-full border border-pink-400 text-pink-600 hover:shadow-md" data-category="Fitness">Fitness</button>
+        <button class="category-filter px-3 py-1 rounded-full border border-pink-400 text-pink-600 hover:shadow-md" data-category="Mental Wellness">Mental Wellness</button>
+        <button class="category-filter px-3 py-1 rounded-full border border-pink-400 text-pink-600 hover:shadow-md" data-category="Nutrition">Nutrition</button>
+        <button class="category-filter px-3 py-1 rounded-full border border-pink-400 text-pink-600 hover:shadow-md" data-category="Sexual Health">Sexual Health</button>
+        <button id="bookmark-toggle" class="px-3 py-1 rounded-full border border-pink-400 text-pink-600 hover:shadow-md flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          Bookmarks
+        </button>
+      </div>
+    </div>
+
+    <!-- Resources Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="resources-container">
+      <!-- Resource 1 -->
+      <div class="resource-card category-Menstrual-Health bg-white shadow rounded-lg p-5 relative">
+        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Menstrual Health</span>
+        <h2 class="text-lg font-semibold mb-2 text-pink-700">Understanding Your Menstrual Cycle</h2>
+        <p class="text-sm text-gray-700 mb-3">A comprehensive guide to the phases of your cycle.</p>
+        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
+        <div class="resource-details hidden mt-3 text-sm bg-pink-50 p-3 rounded-md">
+          Learn about the four phases of the menstrual cycle: menstrual, follicular, ovulation, and luteal. Understanding these can help you manage symptoms and plan better.
+        </div>
+        <button class="bookmark-btn text-xs mt-3 text-gray-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          Bookmark
+        </button>
+      </div>
+
+      <!-- Resource 2 -->
+      <div class="resource-card category-Fitness bg-white shadow rounded-lg p-5 relative">
+        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Fitness</span>
+        <h2 class="text-lg font-semibold mb-2 text-pink-700">Top 5 Exercises for Period Pain</h2>
+        <p class="text-sm text-gray-700 mb-3">Gentle workouts that help reduce cramps.</p>
+        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
+        <div class="resource-details hidden mt-3 text-sm bg-pink-50 p-3 rounded-md">
+          Exercise can help with blood flow and endorphin release. Try light yoga, walking, and stretching routines during your period.
+        </div>
+        <button class="bookmark-btn text-xs mt-3 text-gray-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          Bookmark
+        </button>
+      </div>
+
+      <!-- Resource 3 -->
+      <div class="resource-card category-Nutrition bg-white shadow rounded-lg p-5 relative">
+        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Nutrition</span>
+        <h2 class="text-lg font-semibold mb-2 text-pink-700">Eating Right During PMS</h2>
+        <p class="text-sm text-gray-700 mb-3">Foods to beat bloating and mood swings.</p>
+        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
+        <div class="resource-details hidden mt-3 text-sm bg-pink-50 p-3 rounded-md">
+          Incorporate magnesium-rich foods like leafy greens and dark chocolate. Reduce salt, sugar, and caffeine for less irritability and bloating.
+        </div>
+        <button class="bookmark-btn text-xs mt-3 text-gray-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          Bookmark
+        </button>
+      </div>
+
+      <!-- Resource 4 -->
+      <div class="resource-card category-Mental-Wellness bg-white shadow rounded-lg p-5 relative">
+        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Mental Wellness</span>
+        <h2 class="text-lg font-semibold mb-2 text-pink-700">Mindfulness for Mental Clarity</h2>
+        <p class="text-sm text-gray-700 mb-3">How meditation supports menstrual mental wellness.</p>
+        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
+        <div class="resource-details hidden mt-3 text-sm bg-pink-50 p-3 rounded-md">
+          Meditation can reduce stress and promote hormonal balance. Practicing mindfulness daily helps emotional stability, especially during PMS.
+        </div>
+        <button class="bookmark-btn text-xs mt-3 text-gray-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          Bookmark
+        </button>
+      </div>
+
+      <!-- NEW Resource 5 -->
+      <div class="resource-card category-Sexual-Health bg-white shadow rounded-lg p-5 relative">
+        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Sexual Health</span>
+        <h2 class="text-lg font-semibold mb-2 text-pink-700">Contraception Options Guide</h2>
+        <p class="text-sm text-gray-700 mb-3">Understanding different birth control methods.</p>
+        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
+        <div class="resource-details hidden mt-3 text-sm bg-pink-50 p-3 rounded-md">
+          Explore hormonal and non-hormonal contraception options including pills, IUDs, implants, and barrier methods. Find what works best for your body and lifestyle.
+        </div>
+        <button class="bookmark-btn text-xs mt-3 text-gray-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          Bookmark
+        </button>
+      </div>
+
+      <!-- NEW Resource 6 -->
+      <div class="resource-card category-Fitness bg-white shadow rounded-lg p-5 relative">
+        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Fitness</span>
+        <h2 class="text-lg font-semibold mb-2 text-pink-700">Cycle-Synced Workout Plan</h2>
+        <p class="text-sm text-gray-700 mb-3">Adjusting exercise based on your menstrual phases.</p>
+        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
+        <div class="resource-details hidden mt-3 text-sm bg-pink-50 p-3 rounded-md">
+          Learn how to optimize workouts around your cycle - high intensity during follicular phase, strength during ovulation, recovery during luteal phase, and gentle movement during menstruation.
+        </div>
+        <button class="bookmark-btn text-xs mt-3 text-gray-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          Bookmark
+        </button>
+      </div>
+
+      <!-- NEW Resource 7 -->
+      <div class="resource-card category-Nutrition bg-white shadow rounded-lg p-5 relative">
+        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Nutrition</span>
+        <h2 class="text-lg font-semibold mb-2 text-pink-700">Iron-Rich Recipe Collection</h2>
+        <p class="text-sm text-gray-700 mb-3">Combat period-related anemia with these meals.</p>
+        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
+        <div class="resource-details hidden mt-3 text-sm bg-pink-50 p-3 rounded-md">
+          Delicious recipes featuring iron-rich foods like spinach, lentils, and quinoa. These meals help replenish iron lost during menstruation and boost energy levels naturally.
+        </div>
+        <button class="bookmark-btn text-xs mt-3 text-gray-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          Bookmark
+        </button>
+      </div>
+
+      <!-- NEW Resource 8 -->
+      <div class="resource-card category-Mental-Wellness bg-white shadow rounded-lg p-5 relative">
+        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Mental Wellness</span>
+        <h2 class="text-lg font-semibold mb-2 text-pink-700">Understanding PMDD</h2>
+        <p class="text-sm text-gray-700 mb-3">Recognition and management strategies.</p>
+        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
+        <div class="resource-details hidden mt-3 text-sm bg-pink-50 p-3 rounded-md">
+          Premenstrual Dysphoric Disorder (PMDD) affects 3-8% of women. Learn the difference between PMS and PMDD, and explore treatment options including lifestyle changes, therapy, and medication.
+        </div>
+        <button class="bookmark-btn text-xs mt-3 text-gray-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          Bookmark
+        </button>
+      </div>
+    </div>
+    
+    <!-- No Results Message -->
+    <div id="no-results" class="hidden text-center py-8 text-pink-600">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 text-pink-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <p class="text-lg font-medium">No matching resources found</p>
+      <p class="text-sm text-pink-500">Try adjusting your search or filters</p>
+    </div>
+  </div>
+
+  <footer class="text-center py-4 text-pink-500 text-sm">
+    <p>© 2025 Femina Resources - Empowering women through health education</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchBar = document.getElementById('search-bar');
+      const categoryFilters = document.querySelectorAll('.category-filter');
+      const bookmarkToggle = document.getElementById('bookmark-toggle');
+      const resourceCards = document.querySelectorAll('.resource-card');
+      const noResultsMessage = document.getElementById('no-results');
+
+      // Initialize bookmark icons
+      const bookmarkedIds = JSON.parse(localStorage.getItem('bookmarkedResources') || '[]');
+      document.querySelectorAll('.bookmark-btn').forEach((btn, index) => {
+        if (bookmarkedIds.includes(index)) {
+          btn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-pink-500" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            </svg>
+            Bookmarked
+          `;
+        }
+      });
+
+      function updateDisplay() {
+        const query = searchBar.value.toLowerCase();
+        const activeCategory = document.querySelector('.category-filter.active')?.dataset.category;
+        const showBookmarksOnly = bookmarkToggle?.classList.contains('active');
+        const bookmarkedIds = JSON.parse(localStorage.getItem('bookmarkedResources') || '[]');
+        
+        let visibleCount = 0;
+
+        resourceCards.forEach((card, index) => {
+          const title = card.querySelector('h2').textContent.toLowerCase();
+          const desc = card.querySelector('p').textContent.toLowerCase();
+          const details = card.querySelector('.resource-details').textContent.toLowerCase();
+          const matchesQuery = title.includes(query) || desc.includes(query) || details.includes(query);
+          const matchesCategory = !activeCategory || card.classList.contains(`category-${activeCategory.replace(/\s+/g, '-')}`);
+          const isBookmarked = bookmarkedIds.includes(index);
+          const showCard = matchesQuery && matchesCategory && (!showBookmarksOnly || isBookmarked);
+          
+          card.style.display = showCard ? 'block' : 'none';
+          if (showCard) visibleCount++;
+        });
+
+        noResultsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      searchBar?.addEventListener('input', updateDisplay);
+
+      categoryFilters.forEach(button => {
+        button.addEventListener('click', () => {
+          if (button.classList.contains('active')) {
+            button.classList.remove('active');
+          } else {
+            categoryFilters.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+          }
+          updateDisplay();
+        });
+      });
+
+      bookmarkToggle?.addEventListener('click', () => {
+        bookmarkToggle.classList.toggle('active');
+        updateDisplay();
+      });
+
+      document.querySelectorAll('.toggle-details').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const details = btn.nextElementSibling;
+          details.classList.toggle('hidden');
+          btn.textContent = details.classList.contains('hidden') ? 'Read More' : 'Show Less';
+        });
+      });
+
+      document.querySelectorAll('.bookmark-btn').forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+          let bookmarked = JSON.parse(localStorage.getItem('bookmarkedResources') || '[]');
+          if (bookmarked.includes(index)) {
+            bookmarked = bookmarked.filter(i => i !== index);
+            btn.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>
+              Bookmark
+            `;
+          } else {
+            bookmarked.push(index);
+            btn.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-pink-500" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>
+              Bookmarked
+            `;
+          }
+          localStorage.setItem('bookmarkedResources', JSON.stringify(bookmarked));
+          updateDisplay();
+        });
+      });
+
+      updateDisplay();
+    });
+  </script>
+</body>
+</html>
