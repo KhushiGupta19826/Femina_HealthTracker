@@ -25,6 +25,7 @@
     .resource-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      hover:shadow-lg transition duration-300 ease-in-out;
     }
     .toggle-details:hover, .bookmark-btn:hover {
       opacity: 0.8;
@@ -72,10 +73,10 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="resources-container">
       <!-- Resource 1 -->
       <div class="resource-card category-Menstrual-Health bg-white shadow rounded-lg p-5 relative">
-        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Menstrual Health</span>
+        <span class="category-tag text-white bg-[#ff4d94] px-2 py-1 rounded text-xs md:text-sm">Nutrition</span>Menstrual Health</span>
         <h2 class="text-lg font-semibold mb-2 text-pink-700">Understanding Your Menstrual Cycle</h2>
         <p class="text-sm text-gray-700 mb-3">A comprehensive guide to the phases of your cycle.</p>
-        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
+        <button class="toggle-details text-pink-500 underline text-sm focus:outline-none" aria-expanded="false">Read More</button>
         <div class="resource-details hidden mt-3 text-sm bg-pink-50 p-3 rounded-md">
           Learn about the four phases of the menstrual cycle: menstrual, follicular, ovulation, and luteal. Understanding these can help you manage symptoms and plan better.
         </div>
@@ -89,7 +90,7 @@
 
       <!-- Resource 2 -->
       <div class="resource-card category-Fitness bg-white shadow rounded-lg p-5 relative">
-        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Fitness</span>
+        <span class="category-tag text-white bg-[#ff4d94] px-2 py-1 rounded text-xs md:text-sm">Nutrition</span>Fitness</span>
         <h2 class="text-lg font-semibold mb-2 text-pink-700">Top 5 Exercises for Period Pain</h2>
         <p class="text-sm text-gray-700 mb-3">Gentle workouts that help reduce cramps.</p>
         <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
@@ -106,7 +107,7 @@
 
       <!-- Resource 3 -->
       <div class="resource-card category-Nutrition bg-white shadow rounded-lg p-5 relative">
-        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Nutrition</span>
+        <span class="category-tag text-white bg-[#ff4d94] px-2 py-1 rounded text-xs md:text-sm">Nutrition</span>Nutrition</span>
         <h2 class="text-lg font-semibold mb-2 text-pink-700">Eating Right During PMS</h2>
         <p class="text-sm text-gray-700 mb-3">Foods to beat bloating and mood swings.</p>
         <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
@@ -123,7 +124,7 @@
 
       <!-- Resource 4 -->
       <div class="resource-card category-Mental-Wellness bg-white shadow rounded-lg p-5 relative">
-        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Mental Wellness</span>
+        <span class="category-tag text-white bg-[#ff4d94] px-2 py-1 rounded text-xs md:text-sm">Nutrition</span>Mental Wellness</span>
         <h2 class="text-lg font-semibold mb-2 text-pink-700">Mindfulness for Mental Clarity</h2>
         <p class="text-sm text-gray-700 mb-3">How meditation supports menstrual mental wellness.</p>
         <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
@@ -140,7 +141,7 @@
 
       <!-- NEW Resource 5 -->
       <div class="resource-card category-Sexual-Health bg-white shadow rounded-lg p-5 relative">
-        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Sexual Health</span>
+        <span class="category-tag text-white bg-[#ff4d94] px-2 py-1 rounded text-xs md:text-sm">Nutrition</span>Sexual Health</span>
         <h2 class="text-lg font-semibold mb-2 text-pink-700">Contraception Options Guide</h2>
         <p class="text-sm text-gray-700 mb-3">Understanding different birth control methods.</p>
         <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
@@ -157,7 +158,7 @@
 
       <!-- NEW Resource 6 -->
       <div class="resource-card category-Fitness bg-white shadow rounded-lg p-5 relative">
-        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Fitness</span>
+        <span class="category-tag text-white bg-[#ff4d94] px-2 py-1 rounded text-xs md:text-sm">Nutrition</span>Fitness</span>
         <h2 class="text-lg font-semibold mb-2 text-pink-700">Cycle-Synced Workout Plan</h2>
         <p class="text-sm text-gray-700 mb-3">Adjusting exercise based on your menstrual phases.</p>
         <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
@@ -174,7 +175,7 @@
 
       <!-- NEW Resource 7 -->
       <div class="resource-card category-Nutrition bg-white shadow rounded-lg p-5 relative">
-        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Nutrition</span>
+        <span class="category-tag text-white bg-[#ff4d94] px-2 py-1 rounded text-xs md:text-sm">Nutrition</span>Nutrition</span>
         <h2 class="text-lg font-semibold mb-2 text-pink-700">Iron-Rich Recipe Collection</h2>
         <p class="text-sm text-gray-700 mb-3">Combat period-related anemia with these meals.</p>
         <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>
@@ -191,7 +192,7 @@
 
       <!-- NEW Resource 8 -->
       <div class="resource-card category-Mental-Wellness bg-white shadow rounded-lg p-5 relative">
-        <span class="category-tag bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">Mental Wellness</span>
+        <span class="category-tag text-white bg-[#ff4d94] px-2 py-1 rounded text-xs md:text-sm">Nutrition</span>Mental Wellness</span>
         <h2 class="text-lg font-semibold mb-2 text-pink-700">Understanding PMDD</h2>
         <p class="text-sm text-gray-700 mb-3">Recognition and management strategies.</p>
         <button class="toggle-details text-pink-500 underline text-sm focus:outline-none">Read More</button>

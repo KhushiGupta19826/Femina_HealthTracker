@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitness Tracker | Femina</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
+  <style>
+    :root {
+      --femina-pink: #ff4d94;
+      --femina-pink-light: #ff7aa8;
+      --femina-pink-dark: #e63d80;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff5f8;
+    }
+    
+    .femina-gradient {
+      background: linear-gradient(135deg, var(--femina-pink) 0%, var(--femina-pink-light) 100%);
+    }
+    
+    .femina-card {
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(255, 77, 148, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .femina-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 77, 148, 0.2);
+    }
+    
+    .femina-button {
+      background: linear-gradient(135deg, var(--femina-pink) 0%, var(--femina-pink-light) 100%);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 77, 148, 0.3);
+    }
+    
+    .femina-button:hover {
+      box-shadow: 0 6px 14px rgba(255, 77, 148, 0.4);
+      transform: translateY(-1px);
+    }
+    
+    .femina-input {
+      border: 1px solid #ffe0ec;
+      transition: all 0.3s ease;
+    }
+    
+    .femina-input:focus {
+      border-color: var(--femina-pink);
+      box-shadow: 0 0 0 3px rgba(255, 77, 148, 0.2);
+      outline: none;
+    }
+    
+    /* Progress bar animation */
+    @keyframes fillProgress {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    .progress-bar {
+      position: relative;
+      height: 8px;
+      border-radius: 4px;
+      background-color: #ffe0ec;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--femina-pink) 0%, var(--femina-pink-light) 100%);
+      animation: fillProgress 1s ease-out forwards;
+    }
+    
+    /* Decoration elements */
+    .decoration-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 77, 148, 0.1) 0%, rgba(255, 122, 168, 0.1) 100%);
+      z-index: -1;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col relative">
+  <!-- Decorative elements -->
+  <div class="decoration-circle" style="width: 300px; height: 300px; top: -100px; right: -100px;"></div>
+  <div class="decoration-circle" style="width: 200px; height: 200px; bottom: 20%; left: -100px;"></div>
+
+  <!-- Header -->
+  <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-10">
+    <div class="flex items-center">
+      <i class="fas fa-heart text-[color:var(--femina-pink)] mr-2"></i>
+      <h1 class="text-xl font-bold text-[color:var(--femina-pink)]">Femina Fitness Tracker</h1>
+    </div>
+    <nav class="flex items-center">
+      <a href="index.html" class="text-sm text-gray-700 hover:text-[color:var(--femina-pink)] mr-5 flex items-center">
+        <i class="fas fa-home mr-1"></i> Home
+      </a>
+      <a href="resources.html" class="text-sm text-gray-700 hover:text-[color:var(--femina-pink)] mr-5 flex items-center">
+        <i class="fas fa-book mr-1"></i> Resources
+      </a>
+      <a href="fitness.html" class="text-sm text-[color:var(--femina-pink)] font-semibold flex items-center">
+        <i class="fas fa-dumbbell mr-1"></i> Fitness
+      </a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow p-6 max-w-4xl mx-auto space-y-8">
+    <!-- Welcome Banner -->
+    <section class="femina-gradient rounded-2xl p-6 text-white shadow-lg">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold mb-2">Welcome Back!</h2>
+          <p class="opacity-90">Track your fitness journey and celebrate your progress.</p>
+        </div>
+        <div class="mt-4 md:mt-0">
+          <div class="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+            <p class="text-sm font-medium">Today's Date</p>
+            <p class="text-xl font-bold" id="currentDate">Apr 22, 2025</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Daily Log Form -->
+    <section class="bg-white rounded-2xl shadow p-6 femina-card">
+      <h2 class="text-lg font-semibold text-[color:var(--femina-pink)] mb-4 flex items-center">
+        <i class="fas fa-clipboard-list mr-2"></i> Log Your Activity
+      </h2>
+      <form id="fitnessForm" class="space-y-4">
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="space-y-1">
+            <label class="text-xs text-gray-500 font-medium">Steps</label>
+            <div class="relative">
+              <i class="fas fa-shoe-prints absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input type="number" placeholder="Steps walked" class="femina-input w-full p-2 pl-9 border rounded" required />
+            </div>
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs text-gray-500 font-medium">Calories</label>
+            <div class="relative">
+              <i class="fas fa-fire absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input type="number" placeholder="Calories burned" class="femina-input w-full p-2 pl-9 border rounded" required />
+            </div>
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs text-gray-500 font-medium">Workout</label>
+            <div class="relative">
+              <i class="fas fa-running absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input type="text" placeholder="Workout done (e.g. Yoga)" class="femina-input w-full p-2 pl-9 border rounded" required />
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="mt-4 femina-button text-white px-6 py-2 rounded-lg flex items-center justify-center hover:opacity-90 transition">
+          <i class="fas fa-plus mr-2"></i> Add Entry
+        </button>
+      </form>
+    </section>
+
+    <!-- Activity Summary -->
+    <section class="grid md:grid-cols-3 gap-4">
+      <div class="bg-white shadow rounded-2xl p-5 text-center femina-card relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-16 h-16 bg-pink-50 rounded-bl-full"></div>
+        <div class="relative">
+          <p class="text-sm text-gray-500 mb-1">Steps Today</p>
+          <h3 class="text-3xl font-bold text-[color:var(--femina-pink)]" id="stepsTotal">0</h3>
+          <div class="mt-3 progress-bar">
+            <div class="progress-fill" style="width: 40%"></div>
+          </div>
+          <p class="text-xs text-gray-400 mt-1">Goal: 10,000 steps</p>
+          <i class="fas fa-shoe-prints text-pink-100 absolute top-2 right-2"></i>
+        </div>
+      </div>
+      <div class="bg-white shadow rounded-2xl p-5 text-center femina-card relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-16 h-16 bg-pink-50 rounded-bl-full"></div>
+        <div class="relative">
+          <p class="text-sm text-gray-500 mb-1">Calories Burned</p>
+          <h3 class="text-3xl font-bold text-[color:var(--femina-pink)]" id="caloriesTotal">0</h3>
+          <div class="mt-3 progress-bar">
+            <div class="progress-fill" style="width: 25%"></div>
+          </div>
+          <p class="text-xs text-gray-400 mt-1">Goal: 500 calories</p>
+          <i class="fas fa-fire text-pink-100 absolute top-2 right-2"></i>
+        </div>
+      </div>
+      <div class="bg-white shadow rounded-2xl p-5 text-center femina-card relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-16 h-16 bg-pink-50 rounded-bl-full"></div>
+        <div class="relative">
+          <p class="text-sm text-gray-500 mb-1">Today's Workouts</p>
+          <h3 class="text-xl font-bold text-[color:var(--femina-pink)] workout-display" id="workoutList">None</h3>
+          <div class="mt-3 flex justify-center">
+            <span class="inline-block px-3 py-1 bg-pink-100 text-[color:var(--femina-pink)] text-xs rounded-full">
+              <i class="fas fa-check-circle mr-1"></i> <span id="workoutCount">0</span> Completed
+            </span>
+          </div>
+          <i class="fas fa-dumbbell text-pink-100 absolute top-2 right-2"></i>
+        </div>
+      </div>
+      <!-- Add this button below your activity summary section -->
+<div class="flex justify-center mt-6">
+  <button
+    id="clearLogs"
+    class="px-6 py-3 bg-gradient-to-r from-pink-500 to-pink-600 text-white font-semibold rounded-full shadow-lg transform transition-all hover:scale-105 hover:from-pink-600 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
+  >
+    Clear All Logs
+  </button>
+</div>
+
+
+    </section>
+
+    <!-- Progress Chart -->
+    <section class="bg-white rounded-2xl shadow p-6 femina-card">
+      <h2 class="text-lg font-semibold text-[color:var(--femina-pink)] mb-4 flex items-center">
+        <i class="fas fa-chart-line mr-2"></i> Weekly Progress
+      </h2>
+      <div class="bg-pink-50 rounded-xl p-8 text-center relative overflow-hidden">
+        <i class="fas fa-chart-bar text-6xl text-pink-200 mb-2"></i>
+        <h3 class="text-lg font-semibold text-gray-700">Coming Soon</h3>
+        <p class="text-gray-500 text-sm">Beautiful graph-based visual tracking will be available in the next update!</p>
+        <div class="mt-4">
+          <button class="px-4 py-2 border border-[color:var(--femina-pink)] text-[color:var(--femina-pink)] rounded-lg hover:bg-pink-50 transition">
+            <i class="fas fa-bell mr-1"></i> Notify Me
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Motivation Quote -->
+    <section class="femina-gradient rounded-2xl p-6 text-white shadow-lg">
+      <div class="flex items-center">
+        <div class="mr-4">
+          <i class="fas fa-quote-left text-3xl opacity-50"></i>
+        </div>
+        <div>
+          <p class="text-lg font-medium italic">"The only bad workout is the one that didn't happen."</p>
+          <p class="text-sm opacity-75 mt-1">— Fitness Motivation</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow-inner text-center p-5 text-sm text-gray-500">
+    <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6">
+      <div class="flex items-center">
+        <i class="fas fa-heart text-[color:var(--femina-pink)] mr-1"></i>
+        <span>&copy; 2025 Femina. Stay strong and healthy!</span>
+      </div>
+      <div class="flex space-x-4">
+        <a href="#" class="hover:text-[color:var(--femina-pink)]"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="hover:text-[color:var(--femina-pink)]"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="hover:text-[color:var(--femina-pink)]"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script to handle form -->
+  <script>
+    // Set current date
+    const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', dateOptions);
+    
+    const form = document.getElementById('fitnessForm');
+    const stepsTotal = document.getElementById('stepsTotal');
+    const caloriesTotal = document.getElementById('caloriesTotal');
+    const workoutList = document.getElementById('workoutList');
+    const workoutCount = document.getElementById('workoutCount');
+
+    let steps = 0;
+    let calories = 0;
+    let workouts = [];
+
+    // Function to update progress bars
+    function updateProgressBars() {
+      const stepsBar = document.querySelectorAll('.progress-fill')[0];
+      const caloriesBar = document.querySelectorAll('.progress-fill')[1];
+      
+      const stepsPercentage = Math.min(steps / 10000 * 100, 100);
+      const caloriesPercentage = Math.min(calories / 500 * 100, 100);
+      
+      stepsBar.style.width = stepsPercentage + '%';
+      caloriesBar.style.width = caloriesPercentage + '%';
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const inputs = form.querySelectorAll('input');
+      steps += parseInt(inputs[0].value) || 0;
+      calories += parseInt(inputs[1].value) || 0;
+      workouts.push(inputs[2].value.trim());
+
+      // Update UI
+      stepsTotal.textContent = steps.toLocaleString();
+      caloriesTotal.textContent = calories.toLocaleString();
+      
+      if (workouts.length > 0) {
+        workoutList.textContent = workouts.join(', ');
+      } else {
+        workoutList.textContent = 'None';
+      }
+      
+      workoutCount.textContent = workouts.length;
+      
+      // Update progress bars
+      updateProgressBars();
+
+      // Reset form
+      form.reset();
+      
+      // Add a little animation to show success
+      const button = form.querySelector('button');
+      button.innerHTML = '<i class="fas fa-check mr-2"></i> Added!';
+      button.classList.add('bg-green-500');
+      
+      setTimeout(() => {
+        button.innerHTML = '<i class="fas fa-plus mr-2"></i> Add Entry';
+        button.classList.remove('bg-green-500');
+      }, 1500);
+    });
+    document.getElementById('clearLogs').addEventListener('click', () => {
+  if (confirm("Are you sure you want to clear all logs?")) {
+    steps = 0;
+    calories = 0;
+    workouts = [];
+    localStorage.removeItem('fitnessLogs');
+    
+    // Reset the UI
+    stepsTotal.textContent = '0';
+    caloriesTotal.textContent = '0';
+    workoutList.textContent = 'None';
+    workoutCount.textContent = '0';
+
+    // Reset progress bars
+    updateProgressBars();
+  }
+});
+
+  </script>
+</body>
+</html>
