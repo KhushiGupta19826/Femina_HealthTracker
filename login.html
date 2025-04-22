@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | Femina</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -32,7 +33,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 40px 20px;
+      padding: 20px;
     }
     
     .container {
@@ -43,12 +44,13 @@
       overflow: hidden;
       box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
       display: flex;
+      flex-direction: row;
     }
     
     .left-panel {
       flex: 1;
       background: linear-gradient(to bottom, var(--primary), var(--secondary));
-      padding: 60px 40px;
+      padding: 40px 30px;
       color: white;
       display: flex;
       flex-direction: column;
@@ -119,11 +121,12 @@
       align-items: center;
       justify-content: center;
       margin-right: 15px;
+      flex-shrink: 0;
     }
     
     .right-panel {
       flex: 1;
-      padding: 60px 40px;
+      padding: 40px 30px;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -141,7 +144,7 @@
     
     .toggle-btn {
       flex: 1;
-      padding: 15px;
+      padding: 12px;
       text-align: center;
       font-weight: 500;
       cursor: pointer;
@@ -200,7 +203,7 @@
     
     input {
       width: 100%;
-      padding: 15px 20px;
+      padding: 12px 15px;
       border: 2px solid #e0e0e0;
       border-radius: 10px;
       font-size: 1rem;
@@ -216,7 +219,7 @@
     
     button {
       width: 100%;
-      padding: 15px;
+      padding: 12px;
       border: none;
       border-radius: 10px;
       background: linear-gradient(to right, var(--primary), var(--secondary));
@@ -279,15 +282,16 @@
     
     .modal-content {
       background-color: white;
-      padding: 30px;
+      padding: 25px;
       border-radius: 15px;
       width: 90%;
       max-width: 450px;
       box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+      position: relative;
     }
     
     .modal-title {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 600;
       margin-bottom: 20px;
       color: var(--text);
@@ -302,6 +306,25 @@
       color: var(--light-text);
     }
     
+    /* Responsive styles */
+    @media (max-width: 900px) {
+      .container {
+        max-width: 800px;
+      }
+      
+      .left-panel {
+        padding: 30px 20px;
+      }
+      
+      .right-panel {
+        padding: 30px 20px;
+      }
+      
+      .brand {
+        font-size: 2.2rem;
+      }
+    }
+    
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
@@ -309,16 +332,118 @@
       }
       
       .left-panel {
-        padding: 30px;
+        padding: 30px 20px;
         text-align: center;
       }
       
-      .features {
-        display: none;
+      .feature-item {
+        justify-content: center;
       }
       
       .right-panel {
-        padding: 30px;
+        padding: 30px 20px;
+      }
+      
+      .form-section {
+        padding-right: 0;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+      
+      .container {
+        border-radius: 15px;
+      }
+      
+      .left-panel {
+        padding: 25px 15px;
+      }
+      
+      .brand {
+        font-size: 2rem;
+      }
+      
+      .tagline {
+        font-size: 1rem;
+      }
+      
+      .features {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .features h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+      
+      .right-panel {
+        padding: 25px 15px;
+      }
+      
+      .toggle-btn {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+      
+      input {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+      
+      button {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+      
+      .modal-content {
+        padding: 20px 15px;
+      }
+      
+      .modal-title {
+        font-size: 1.2rem;
+      }
+    }
+    
+    @media (max-width: 360px) {
+      .brand {
+        font-size: 1.8rem;
+      }
+      
+      .features h3 {
+        font-size: 1.1rem;
+      }
+      
+      .toggle-btn {
+        font-size: 0.85rem;
+      }
+    }
+    
+    /* Add touch-friendly styles */
+    @media (hover: none) and (pointer: coarse) {
+      button, .toggle-btn, .forgot-password a, .bottom-text a, .close-modal {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      input {
+        min-height: 44px;
+      }
+      
+      .forgot-password {
+        padding: 5px 0;
+      }
+      
+      .forgot-password a {
+        padding: 5px;
+        display: inline-block;
       }
     }
   </style>
