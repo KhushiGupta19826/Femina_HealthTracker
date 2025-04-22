@@ -203,6 +203,14 @@
           <i class="fas fa-dumbbell text-pink-100 absolute top-2 right-2"></i>
         </div>
       </div>
+      <!-- Add this button below your activity summary section -->
+<button
+  id="clearLogs"
+  class="mt-4 px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700 transition-all"
+>
+  Clear All Logs
+</button>
+
     </section>
 
     <!-- Progress Chart -->
@@ -314,6 +322,24 @@
         button.classList.remove('bg-green-500');
       }, 1500);
     });
+    document.getElementById('clearLogs').addEventListener('click', () => {
+  if (confirm("Are you sure you want to clear all logs?")) {
+    steps = 0;
+    calories = 0;
+    workouts = [];
+    localStorage.removeItem('fitnessLogs');
+    
+    // Reset the UI
+    stepsTotal.textContent = '0';
+    caloriesTotal.textContent = '0';
+    workoutList.textContent = 'None';
+    workoutCount.textContent = '0';
+
+    // Reset progress bars
+    updateProgressBars();
+  }
+});
+
   </script>
 </body>
 </html>
