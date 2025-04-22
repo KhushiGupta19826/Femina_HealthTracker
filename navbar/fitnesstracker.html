@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitness Tracker | Femina</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --femina-pink: #ff4d94;
+    }
+    .femina-gradient {
+      background: linear-gradient(135deg, #ff4d94 0%, #ff7aa8 100%);
+    }
+  </style>
+</head>
+<body class="bg-pink-50 text-gray-800 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm p-4 flex justify-between items-center sticky top-0 z-10">
+    <h1 class="text-xl font-bold text-[color:var(--femina-pink)]">Femina Fitness Tracker</h1>
+    <nav>
+      <a href="index.html" class="text-sm text-gray-700 hover:text-[color:var(--femina-pink)] mr-4">Home</a>
+      <a href="resources.html" class="text-sm text-gray-700 hover:text-[color:var(--femina-pink)] mr-4">Resources</a>
+      <a href="fitness.html" class="text-sm text-[color:var(--femina-pink)] font-semibold">Fitness</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow p-6 max-w-4xl mx-auto space-y-8">
+
+    <!-- Daily Log Form -->
+    <section class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-lg font-semibold text-[color:var(--femina-pink)] mb-4">Log Your Activity</h2>
+      <form id="fitnessForm" class="space-y-4">
+        <div class="grid md:grid-cols-3 gap-4">
+          <input type="number" placeholder="Steps walked" class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[color:var(--femina-pink)]" required />
+          <input type="number" placeholder="Calories burned" class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[color:var(--femina-pink)]" required />
+          <input type="text" placeholder="Workout done (e.g. Yoga)" class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[color:var(--femina-pink)]" required />
+        </div>
+        <button type="submit" class="mt-4 bg-[color:var(--femina-pink)] text-white px-4 py-2 rounded hover:opacity-90 transition">Add Entry</button>
+      </form>
+    </section>
+
+    <!-- Activity Summary -->
+    <section class="grid md:grid-cols-3 gap-4">
+      <div class="bg-white shadow rounded-2xl p-4 text-center">
+        <p class="text-sm text-gray-500">Steps Today</p>
+        <h3 class="text-2xl font-bold text-[color:var(--femina-pink)]" id="stepsTotal">0</h3>
+      </div>
+      <div class="bg-white shadow rounded-2xl p-4 text-center">
+        <p class="text-sm text-gray-500">Calories Burned</p>
+        <h3 class="text-2xl font-bold text-[color:var(--femina-pink)]" id="caloriesTotal">0</h3>
+      </div>
+      <div class="bg-white shadow rounded-2xl p-4 text-center">
+        <p class="text-sm text-gray-500">Workouts</p>
+        <h3 class="text-2xl font-bold text-[color:var(--femina-pink)]" id="workoutList">None</h3>
+      </div>
+    </section>
+
+    <!-- Progress Chart Placeholder -->
+    <section class="bg-white rounded-2xl shadow p-6 text-center">
+      <h2 class="text-lg font-semibold text-[color:var(--femina-pink)] mb-2">Weekly Progress (Coming Soon)</h2>
+      <p class="text-gray-500 text-sm">Graph-based visual tracking will be added in future updates.</p>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white text-center p-4 text-sm text-gray-500">
+    &copy; 2025 Femina. Stay strong and healthy!
+  </footer>
+
+  <!-- Script to handle form -->
+  <script>
+    const form = document.getElementById('fitnessForm');
+    const stepsTotal = document.getElementById('stepsTotal');
+    const caloriesTotal = document.getElementById('caloriesTotal');
+    const workoutList = document.getElementById('workoutList');
+
+    let steps = 0;
+    let calories = 0;
+    let workouts = [];
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const inputs = form.querySelectorAll('input');
+      steps += parseInt(inputs[0].value) || 0;
+      calories += parseInt(inputs[1].value) || 0;
+      workouts.push(inputs[2].value.trim());
+
+      // Update UI
+      stepsTotal.textContent = steps;
+      caloriesTotal.textContent = calories;
+      workoutList.textContent = workouts.join(', ');
+
+      // Reset form
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
