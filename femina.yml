@@ -19,7 +19,7 @@ structure:
     - js/
     - images/
 environment:
-  hosting: Local (can be deployed to GitHub Pages or Netlify)
+  hosting: Vercel
   backend: Not implemented
   database: None
 
